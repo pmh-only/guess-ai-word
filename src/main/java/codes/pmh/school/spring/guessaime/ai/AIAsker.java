@@ -1,13 +1,15 @@
 package codes.pmh.school.spring.guessaime.ai;
 
+import codes.pmh.school.spring.guessaime.ai.api.AIAPIMessage;
+import codes.pmh.school.spring.guessaime.ai.api.AIAPIRequest;
+import codes.pmh.school.spring.guessaime.ai.api.AIAPIResult;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -15,7 +17,6 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-@Component
 public class AIAsker {
     private static final String ENDPOINT_URL =
             "https://api.openai.com/v1/chat/completions";
@@ -25,24 +26,36 @@ public class AIAsker {
 
     private HttpURLConnection endpointConnection;
 
-    @Autowired
-    private Environment environment;
+    private String question;
 
-    public AIAskResult ask (String question) {
+    private final Logger logger = LoggerFactory.getLogger(AIAsker.class);
+
+    public AIAsker () {
+        if (getAuthorizeToken() == null)
+            logger.warn("Environment variable OPENAI_API_AUTH_TOKEN not found. Calling AIAsker:ask() will be thrown.");
+    }
+
+    public AIAskerResult ask (String question) {
+        setQuestion(question);
+
         try {
-            return askImplementation(question);
+            return askImplementation();
         } catch (Exception exception) {
             logException(exception);
             return null;
         }
     }
 
-    private AIAskResult askImplementation (String question) throws Exception {
+    private void setQuestion (String question) {
+        this.question = question;
+    }
+
+    private AIAskerResult askImplementation () throws Exception {
         openEndpointConnection();
         setAuthorizations();
         setPOSTMethod();
-        setRequestBody(question);
-        return getResponseBody();
+        setRequestBody();
+        return parseAPIResult(getResponseBody());
     }
 
     private void openEndpointConnection () throws IOException {
@@ -57,14 +70,14 @@ public class AIAsker {
     }
 
     private String getAuthorizeToken () {
-         return this.environment.getProperty("ai.authToken");
+        return System.getenv("OPENAI_API_AUTH_TOKEN");
     }
 
-    private void setRequestBody (String question) throws IOException {
+    private void setRequestBody () throws IOException {
         this.endpointConnection.setDoOutput(true);
 
-        AIAskRequest aiAskRequest = getAskRequestFromQuestion(question);
-        String aiAskRequestString = getStringFromAskRequest(aiAskRequest);
+        AIAPIRequest AIAPIRequest = getAskRequestFromQuestion();
+        String aiAskRequestString = getStringFromAskRequest(AIAPIRequest);
 
         setContentTypeJson();
         writeRequestBodyStream(aiAskRequestString);
@@ -74,9 +87,9 @@ public class AIAsker {
         this.endpointConnection.setRequestMethod("POST");
     }
 
-    private AIAskRequest getAskRequestFromQuestion (String question) {
-        AIAskRequest askRequest = new AIAskRequest();
-        AIAskMessage askMessage = new AIAskMessage();
+    private AIAPIRequest getAskRequestFromQuestion () {
+        AIAPIRequest askRequest = new AIAPIRequest();
+        AIAPIMessage askMessage = new AIAPIMessage();
 
         askRequest.setModel(AIAsker.AI_MODEL);
         askMessage.setRole("user");
@@ -86,7 +99,7 @@ public class AIAsker {
         return askRequest;
     }
 
-    private String getStringFromAskRequest (AIAskRequest request) throws JsonProcessingException {
+    private String getStringFromAskRequest (AIAPIRequest request) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 
@@ -106,7 +119,7 @@ public class AIAsker {
         bodyStream.close();
     }
 
-    private AIAskResult getResponseBody () throws IOException {
+    private AIAPIResult getResponseBody () throws IOException {
         String body = readResponseBodyStream();
         return getAskResultFromString(body);
     }
@@ -117,16 +130,24 @@ public class AIAsker {
         return new String(bodyStream.readAllBytes(), StandardCharsets.UTF_8);
     }
 
-    private AIAskResult getAskResultFromString (String body) throws IOException {
+    private AIAPIResult getAskResultFromString (String body) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        return objectMapper.readValue(body, AIAskResult.class);
+        return objectMapper.readValue(body, AIAPIResult.class);
+    }
+
+    private AIAskerResult parseAPIResult (AIAPIResult apiResult) {
+        AIAskerResult askerResult = new AIAskerResult();
+
+        askerResult.setQuestion(this.question);
+        askerResult.setResult(apiResult.getContent());
+
+        return askerResult;
     }
 
     private void logException (Exception exception) {
-        System.err.println("Exception on AIAsker Class.");
-        System.err.println(exception.toString());
+        logger.error("Exception on AIAsker Class.", exception);
     }
 }

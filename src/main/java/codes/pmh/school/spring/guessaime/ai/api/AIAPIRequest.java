@@ -1,17 +1,17 @@
-package codes.pmh.school.spring.guessaime.ai;
+package codes.pmh.school.spring.guessaime.ai.api;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AIAskRequest {
+public class AIAPIRequest {
     private String model;
-    private final List<AIAskMessage> messages = new ArrayList<>();
+    private final List<AIAPIMessage> messages = new ArrayList<>();
 
     public void setModel(String model) {
         this.model = model;
     }
 
-    public void appendMessage(AIAskMessage message) {
+    public void appendMessage(AIAPIMessage message) {
         this.messages.add(message);
     }
 }

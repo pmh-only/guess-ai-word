@@ -1,6 +1,6 @@
-package codes.pmh.school.spring.guessaime.ai;
+package codes.pmh.school.spring.guessaime.ai.api;
 
-public class AIAskMessage {
+public class AIAPIMessage {
     private String role;
 
     private String content;
