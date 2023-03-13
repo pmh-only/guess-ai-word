@@ -1,93 +1,41 @@
 package codes.pmh.school.spring.guessaime.game;
 
-import codes.pmh.school.spring.guessaime.ai.AIAskerResult;
-import codes.pmh.school.spring.guessaime.ai.AIAskerThread;
-import codes.pmh.school.spring.guessaime.dictionary.AnswerDictionary;
-import codes.pmh.school.spring.guessaime.dictionary.QuestionDictionary;
-import codes.pmh.school.spring.guessaime.util.ThreadUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import codes.pmh.school.spring.guessaime.ai.AIAskResult;
+import codes.pmh.school.spring.guessaime.ai.AIAsker;
+import codes.pmh.school.spring.guessaime.util.JWEEncryptor;
+import codes.pmh.school.spring.guessaime.util.PromptBuilder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jose4j.jwe.JsonWebEncryption;
+import org.jose4j.lang.JoseException;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service("gameService")
 public class GameService {
-    @Autowired
-    private AnswerDictionary answerDictionary;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @Autowired
-    private QuestionDictionary questionDictionary;
+    public String createGameToken (GameType type, GameWordCategory wordCategory) throws JsonProcessingException, JoseException {
+        AIAsker aiAsker = new AIAsker();
+        String prompt = createPrompt(type, wordCategory);
 
-    public Game createNewGame () throws IOException {
-        Game game = new Game();
-        String answer = getAnswer();
-        List<String> questions = parseQuestions(getQuestionsMany(5), answer);
-        List<AIAskerResult> results = askQuestions(questions);
+        List<AIAskResult> askResults = aiAsker.ask(prompt);
+        String askResultsString = objectMapper.writeValueAsString(askResults);
 
-        game.setCreatedAt(new Date());
-        game.setAnswer(answer);
-        game.setAiResults(results);
-        game.maskAiResults();
+        JsonWebEncryption gameToken =
+                JWEEncryptor
+                        .getInstance()
+                        .encrypt(askResultsString);
 
-        return game;
+        return gameToken.getCompactSerialization();
     }
 
-    private String getAnswer () throws IOException {
-        return answerDictionary.getRandomWord();
-    }
-
-    private List<String> getQuestionsMany (int count) throws IOException {
-        List<String> questions = new ArrayList<>();
-
-        for (int i = 0; i < count; i++)
-            questions.add(questionDictionary.getRandomWord());
-
-        return questions;
-    }
-
-    private List<String> parseQuestions (List<String> questions, String answer) {
-        List<String> parsedQuestions = new ArrayList<>();
-
-        for (String question : questions)
-            parsedQuestions.add(String.format(question, answer));
-
-        return parsedQuestions;
-    }
-
-    private List<AIAskerResult> askQuestions (List<String> questions) {
-        List<Thread> threads = createAskThreads(questions);
-
-        ThreadUtil.runThreads(threads);
-        ThreadUtil.waitThreads(threads);
-
-        return getAskThreadResults(threads);
-    }
-
-    private List<Thread> createAskThreads (List<String> questions) {
-        List<Thread> askThreads = new ArrayList<>();
-
-        for (String question : questions) {
-            Thread thread = AIAskerThread.createAskTread(question);
-
-            askThreads.add(thread);
-        }
-
-        return askThreads;
-    }
-
-    private List<AIAskerResult> getAskThreadResults (List<Thread> threads) {
-        List<AIAskerResult> askerResults = new ArrayList<>();
-
-        for (Thread thread : threads) {
-            AIAskerThread askerThread = (AIAskerThread) thread;
-            AIAskerResult askerResult = askerThread.getResult();
-
-            askerResults.add(askerResult);
-        }
-
-        return askerResults;
+    private String createPrompt (GameType type, GameWordCategory wordCategory) {
+        return new PromptBuilder()
+                .setWordCount(type.getWordCount())
+                .setQnaCount(type.getQnACount())
+                .setWordCategory(wordCategory.toString())
+                .build();
     }
 }

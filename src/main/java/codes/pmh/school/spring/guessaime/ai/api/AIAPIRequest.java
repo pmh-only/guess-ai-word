@@ -5,7 +5,16 @@ import java.util.List;
 
 public class AIAPIRequest {
     private String model;
+
     private final List<AIAPIMessage> messages = new ArrayList<>();
+
+    public String getModel() {
+        return model;
+    }
+
+    public List<AIAPIMessage> getMessages() {
+        return messages;
+    }
 
     public void setModel(String model) {
         this.model = model;

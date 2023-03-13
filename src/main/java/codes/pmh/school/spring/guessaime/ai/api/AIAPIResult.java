@@ -6,4 +6,8 @@ public class AIAPIResult {
     public String getContent() {
         return choices[0].getMessage().getContent();
     }
+
+    public void setChoices(AIAPIResultChoice[] choices) {
+        this.choices = choices;
+    }
 }

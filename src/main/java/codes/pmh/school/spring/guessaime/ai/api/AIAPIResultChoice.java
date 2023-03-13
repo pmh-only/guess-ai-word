@@ -6,4 +6,8 @@ public class AIAPIResultChoice {
     public AIAPIMessage getMessage() {
         return message;
     }
+
+    public void setMessage(AIAPIMessage message) {
+        this.message = message;
+    }
 }
