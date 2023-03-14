@@ -1,11 +1,6 @@
 package codes.pmh.school.spring.guessaime.game.datatype;
 
 import codes.pmh.school.spring.guessaime.ai.datatype.AIAskResult;
-import codes.pmh.school.spring.guessaime.util.JWEEncryptor;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.jose4j.jwe.JsonWebEncryption;
-import org.jose4j.lang.JoseException;
 
 import java.util.Date;
 import java.util.List;
@@ -15,9 +10,18 @@ public class GameToken {
 
     private List<AIAskResult> askResults;
 
-    private int nextWordIndex = 0;
+    private int currentWordIndex = 0;
 
-    private int nextQuestionIndex = 0;
+    private int currentQuestionIndex = 0;
+
+    public GameToken () {}
+
+    public GameToken (GameToken gameToken) {
+        setAskResults(gameToken.getAskResults());
+        setCurrentQuestionIndex(gameToken.getCurrentQuestionIndex());
+        setCurrentWordIndex(gameToken.getCurrentWordIndex());
+        setGameCreatedAt(gameToken.getGameCreatedAt());
+    }
 
     public Date getGameCreatedAt() {
         return gameCreatedAt;
@@ -35,40 +39,19 @@ public class GameToken {
         this.askResults = askResults;
     }
 
-    public int getNextWordIndex() {
-        return nextWordIndex;
+    public int getCurrentWordIndex() {
+        return currentWordIndex;
     }
 
-    public void setNextWordIndex(int nextWordIndex) {
-        this.nextWordIndex = nextWordIndex;
+    public void setCurrentWordIndex(int currentWordIndex) {
+        this.currentWordIndex = currentWordIndex;
     }
 
-    public int getNextQuestionIndex() {
-        return nextQuestionIndex;
+    public int getCurrentQuestionIndex() {
+        return currentQuestionIndex;
     }
 
-    public void setNextQuestionIndex(int nextQuestionIndex) {
-        this.nextQuestionIndex = nextQuestionIndex;
-    }
-
-    public static GameToken parseString (String encrypted) throws JoseException, JsonProcessingException {
-        String stringified = JWEEncryptor.getInstance().decrypt(encrypted);
-
-        return new ObjectMapper().readValue(stringified, GameToken.class);
-    }
-
-    public String toString () {
-        try {
-            String stringified = new ObjectMapper().writeValueAsString(this);
-
-            JsonWebEncryption encryted =
-                    JWEEncryptor
-                            .getInstance()
-                            .encrypt(stringified);
-
-            return encryted.getCompactSerialization();
-        } catch (Exception e) {
-            return "";
-        }
+    public void setCurrentQuestionIndex(int currentQuestionIndex) {
+        this.currentQuestionIndex = currentQuestionIndex;
     }
 }
