@@ -1,4 +1,4 @@
-package codes.pmh.school.spring.guessaime.ai.api;
+package codes.pmh.school.spring.guessaime.ai.datatype.api;
 
 import java.util.ArrayList;
 import java.util.List;

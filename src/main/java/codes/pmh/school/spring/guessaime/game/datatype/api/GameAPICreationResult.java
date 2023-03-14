@@ -1,19 +1,9 @@
-package codes.pmh.school.spring.guessaime.game.api;
+package codes.pmh.school.spring.guessaime.game.datatype.api;
 
 public class GameAPICreationResult {
-    private String gameToken;
-
     private int wordCount;
 
     private int qnaCount;
-
-    public String getGameToken() {
-        return gameToken;
-    }
-
-    public void setGameToken(String gameToken) {
-        this.gameToken = gameToken;
-    }
 
     public int getWordCount() {
         return wordCount;

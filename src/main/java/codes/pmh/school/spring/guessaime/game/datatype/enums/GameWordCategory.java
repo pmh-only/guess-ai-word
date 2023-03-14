@@ -1,4 +1,4 @@
-package codes.pmh.school.spring.guessaime.game;
+package codes.pmh.school.spring.guessaime.game.datatype.enums;
 
 public enum GameWordCategory {
     ANY ("ANY") {},

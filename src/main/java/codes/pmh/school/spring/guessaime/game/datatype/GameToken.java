@@ -1,6 +1,6 @@
-package codes.pmh.school.spring.guessaime.game;
+package codes.pmh.school.spring.guessaime.game.datatype;
 
-import codes.pmh.school.spring.guessaime.ai.AIAskResult;
+import codes.pmh.school.spring.guessaime.ai.datatype.AIAskResult;
 import codes.pmh.school.spring.guessaime.util.JWEEncryptor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
