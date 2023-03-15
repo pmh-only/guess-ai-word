@@ -1,4 +1,4 @@
-package codes.pmh.school.spring.guessaime.game.datatype.api;
+package codes.pmh.school.spring.guessaiword.game.datatype.api;
 
 public class GameAPICreationResult {
     private int wordCount;

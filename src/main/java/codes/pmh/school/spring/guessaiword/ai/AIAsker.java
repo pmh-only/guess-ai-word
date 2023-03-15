@@ -1,9 +1,9 @@
-package codes.pmh.school.spring.guessaime.ai;
+package codes.pmh.school.spring.guessaiword.ai;
 
-import codes.pmh.school.spring.guessaime.ai.datatype.api.AIAPIMessage;
-import codes.pmh.school.spring.guessaime.ai.datatype.api.AIAPIRequest;
-import codes.pmh.school.spring.guessaime.ai.datatype.api.AIAPIResult;
-import codes.pmh.school.spring.guessaime.ai.datatype.AIAskResult;
+import codes.pmh.school.spring.guessaiword.ai.datatype.api.AIAPIMessage;
+import codes.pmh.school.spring.guessaiword.ai.datatype.api.AIAPIRequest;
+import codes.pmh.school.spring.guessaiword.ai.datatype.api.AIAPIResult;
+import codes.pmh.school.spring.guessaiword.ai.datatype.AIAskResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;

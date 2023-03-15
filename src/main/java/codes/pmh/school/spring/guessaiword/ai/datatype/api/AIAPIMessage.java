@@ -1,4 +1,4 @@
-package codes.pmh.school.spring.guessaime.ai.datatype.api;
+package codes.pmh.school.spring.guessaiword.ai.datatype.api;
 
 public class AIAPIMessage {
     private String role;

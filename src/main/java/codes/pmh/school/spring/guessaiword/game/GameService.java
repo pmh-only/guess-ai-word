@@ -1,13 +1,13 @@
-package codes.pmh.school.spring.guessaime.game;
+package codes.pmh.school.spring.guessaiword.game;
 
-import codes.pmh.school.spring.guessaime.ai.datatype.AIAskQnAResult;
-import codes.pmh.school.spring.guessaime.ai.datatype.AIAskResult;
-import codes.pmh.school.spring.guessaime.ai.AIAsker;
-import codes.pmh.school.spring.guessaime.game.datatype.GameToken;
-import codes.pmh.school.spring.guessaime.game.datatype.enums.GameType;
-import codes.pmh.school.spring.guessaime.game.datatype.enums.GameWordCategory;
-import codes.pmh.school.spring.guessaime.util.JWEEncryptor;
-import codes.pmh.school.spring.guessaime.util.PromptBuilder;
+import codes.pmh.school.spring.guessaiword.ai.datatype.AIAskQnAResult;
+import codes.pmh.school.spring.guessaiword.ai.datatype.AIAskResult;
+import codes.pmh.school.spring.guessaiword.ai.AIAsker;
+import codes.pmh.school.spring.guessaiword.game.datatype.GameToken;
+import codes.pmh.school.spring.guessaiword.game.datatype.enums.GameType;
+import codes.pmh.school.spring.guessaiword.game.datatype.enums.GameWordCategory;
+import codes.pmh.school.spring.guessaiword.util.JWEEncryptor;
+import codes.pmh.school.spring.guessaiword.util.PromptBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jose4j.jwe.JsonWebEncryption;

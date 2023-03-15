@@ -1,4 +1,4 @@
-package codes.pmh.school.spring.guessaime.util;
+package codes.pmh.school.spring.guessaiword.util;
 
 public class PromptBuilder {
     private static final String PROMPT_TEMPLATE =

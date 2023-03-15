@@ -1,4 +1,4 @@
-package codes.pmh.school.spring.guessaime.ai.datatype;
+package codes.pmh.school.spring.guessaiword.ai.datatype;
 
 import java.util.Date;
 import java.util.List;

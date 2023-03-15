@@ -1,4 +1,4 @@
-package codes.pmh.school.spring.guessaime.util;
+package codes.pmh.school.spring.guessaiword.util;
 
 import org.jose4j.jwa.AlgorithmConstraints;
 import org.jose4j.jwe.ContentEncryptionAlgorithmIdentifiers;

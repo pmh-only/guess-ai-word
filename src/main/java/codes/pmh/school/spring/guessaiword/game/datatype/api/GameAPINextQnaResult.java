@@ -1,6 +1,6 @@
-package codes.pmh.school.spring.guessaime.game.datatype.api;
+package codes.pmh.school.spring.guessaiword.game.datatype.api;
 
-import codes.pmh.school.spring.guessaime.ai.datatype.AIAskQnAResult;
+import codes.pmh.school.spring.guessaiword.ai.datatype.AIAskQnAResult;
 
 public class GameAPINextQnaResult {
     private AIAskQnAResult askQnAResult;

@@ -1,13 +1,13 @@
-package codes.pmh.school.spring.guessaime;
+package codes.pmh.school.spring.guessaiword;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GuessaimeApplication {
+public class GuessAIWordApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GuessaimeApplication.class, args);
+		SpringApplication.run(GuessAIWordApplication.class, args);
 	}
 
 }

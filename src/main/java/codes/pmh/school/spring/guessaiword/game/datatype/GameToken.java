@@ -1,6 +1,6 @@
-package codes.pmh.school.spring.guessaime.game.datatype;
+package codes.pmh.school.spring.guessaiword.game.datatype;
 
-import codes.pmh.school.spring.guessaime.ai.datatype.AIAskResult;
+import codes.pmh.school.spring.guessaiword.ai.datatype.AIAskResult;
 
 import java.util.Date;
 import java.util.List;

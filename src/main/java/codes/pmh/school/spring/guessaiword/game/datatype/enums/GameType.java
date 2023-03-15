@@ -1,4 +1,4 @@
-package codes.pmh.school.spring.guessaime.game.datatype.enums;
+package codes.pmh.school.spring.guessaiword.game.datatype.enums;
 
 public enum GameType {
     NORMAL_GAME () {

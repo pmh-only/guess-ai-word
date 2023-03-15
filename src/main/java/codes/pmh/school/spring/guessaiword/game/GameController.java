@@ -1,11 +1,11 @@
-package codes.pmh.school.spring.guessaime.game;
+package codes.pmh.school.spring.guessaiword.game;
 
-import codes.pmh.school.spring.guessaime.ai.datatype.AIAskQnAResult;
-import codes.pmh.school.spring.guessaime.game.datatype.api.GameAPICreationResult;
-import codes.pmh.school.spring.guessaime.game.datatype.api.GameAPINextQnaResult;
-import codes.pmh.school.spring.guessaime.game.datatype.GameToken;
-import codes.pmh.school.spring.guessaime.game.datatype.enums.GameType;
-import codes.pmh.school.spring.guessaime.game.datatype.enums.GameWordCategory;
+import codes.pmh.school.spring.guessaiword.ai.datatype.AIAskQnAResult;
+import codes.pmh.school.spring.guessaiword.game.datatype.api.GameAPICreationResult;
+import codes.pmh.school.spring.guessaiword.game.datatype.api.GameAPINextQnaResult;
+import codes.pmh.school.spring.guessaiword.game.datatype.GameToken;
+import codes.pmh.school.spring.guessaiword.game.datatype.enums.GameType;
+import codes.pmh.school.spring.guessaiword.game.datatype.enums.GameWordCategory;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
