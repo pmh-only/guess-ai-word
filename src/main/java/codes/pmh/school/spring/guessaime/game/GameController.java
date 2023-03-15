@@ -43,15 +43,29 @@ public class GameController {
 
         GameAPINextQnaResult nextQnaResult = new GameAPINextQnaResult();
         GameToken gameToken = gameService.parseGameToken(stringifiedGameToken);
-        GameToken nextGameToken = gameService.increaseQnAIndex(gameToken, 1);
-        String stringifiedNextGameToken = gameService.stringifyGameToken(nextGameToken);
 
-        AIAskQnAResult askQnAResult = gameService.getCurrentQnAResult(nextGameToken);
+        gameService.increaseQnAIndex(gameToken, 1);
+
+        String stringifiedNextGameToken = gameService.stringifyGameToken(gameToken);
+        AIAskQnAResult askQnAResult = gameService.getCurrentQnAResult(gameToken);
 
         nextQnaResult.setAskQnAResult(askQnAResult);
 
         response.addCookie(new Cookie("GAME_TOKEN", stringifiedNextGameToken));
 
         return nextQnaResult;
+    }
+
+    @GetMapping("/nextWord")
+    private void nextWordResult (
+            HttpServletResponse response,
+            @CookieValue("GAME_TOKEN") String stringifiedGameToken)
+            throws Exception {
+
+        GameToken gameToken = gameService.parseGameToken(stringifiedGameToken);
+
+        gameService.increaseWordIndex(gameToken, 1);
+
+        response.addCookie(new Cookie("GAME_TOKEN", stringifiedGameToken));
     }
 }

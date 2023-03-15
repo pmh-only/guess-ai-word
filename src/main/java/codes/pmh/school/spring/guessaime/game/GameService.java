@@ -40,12 +40,13 @@ public class GameService {
                 .build();
     }
 
-    public GameToken increaseQnAIndex (GameToken sourceToken, int increaseCount) {
-        GameToken destToken = new GameToken(sourceToken);
+    public void increaseQnAIndex (GameToken gameToken, int increaseCount) {
+        gameToken.setCurrentQuestionIndex(gameToken.getCurrentQuestionIndex() + increaseCount);
+    }
 
-        destToken.setCurrentQuestionIndex(destToken.getCurrentQuestionIndex() + increaseCount);
-
-        return destToken;
+    public void increaseWordIndex (GameToken gameToken, int increaseCount) {
+        gameToken.setCurrentQuestionIndex(0);
+        gameToken.setCurrentWordIndex(gameToken.getCurrentWordIndex() + increaseCount);
     }
 
     public AIAskQnAResult getCurrentQnAResult (GameToken gameToken) {
@@ -53,6 +54,14 @@ public class GameService {
         int questionIndex = gameToken.getCurrentQuestionIndex();
 
         List<AIAskResult> askResults = gameToken.getAskResults();
+
+        if (askResults.size() <= wordIndex) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "No more words available"
+            );
+        }
+
         List<AIAskQnAResult> qnAResults = askResults.get(wordIndex).getQna();
 
         if (qnAResults.size() <= questionIndex) {
