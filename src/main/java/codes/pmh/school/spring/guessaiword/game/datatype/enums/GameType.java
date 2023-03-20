@@ -11,6 +11,18 @@ public enum GameType {
         public int getQnACount() {
             return 5;
         }
+    },
+
+    SPEED_RUN () {
+        @Override
+        public int getWordCount() {
+            return 5;
+        }
+
+        @Override
+        public int getQnACount() {
+            return 5;
+        }
     };
 
     public int getWordCount()  {

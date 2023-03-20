@@ -6,30 +6,38 @@ import codes.pmh.school.spring.guessaiword.ai.AIAsker;
 import codes.pmh.school.spring.guessaiword.game.datatype.GameToken;
 import codes.pmh.school.spring.guessaiword.game.datatype.enums.GameType;
 import codes.pmh.school.spring.guessaiword.game.datatype.enums.GameWordCategory;
-import codes.pmh.school.spring.guessaiword.util.JWEEncryptor;
+import codes.pmh.school.spring.guessaiword.game.entity.Game;
+import codes.pmh.school.spring.guessaiword.game.entity.GameAIResponse;
+import codes.pmh.school.spring.guessaiword.game.entity.GameRound;
+import codes.pmh.school.spring.guessaiword.game.repository.GameRepository;
+import codes.pmh.school.spring.guessaiword.util.JWSSigner;
 import codes.pmh.school.spring.guessaiword.util.PromptBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.jose4j.jwe.JsonWebEncryption;
+import org.jose4j.jws.JsonWebSignature;
 import org.jose4j.lang.JoseException;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @Service("gameService")
 public class GameService {
-    public GameToken createGameToken (GameType type, GameWordCategory wordCategory) {
+    @Autowired
+    private GameRepository gameRepository;
+
+    public GameToken createNewGame(GameType type, GameWordCategory wordCategory) {
+        List<AIAskResult> askResults = createPromptAndAsk(type, wordCategory);
+        String gameId = createGameFromAskResults(type, wordCategory, askResults);
+
+        return createGameToken(gameId);
+    }
+
+    public List<AIAskResult> createPromptAndAsk (GameType type, GameWordCategory wordCategory) {
         AIAsker aiAsker = new AIAsker();
         String prompt = createPrompt(type, wordCategory);
 
-        List<AIAskResult> askResults = aiAsker.ask(prompt);
-        GameToken gameToken = new GameToken();
-
-        gameToken.setAskResults(askResults);
-
-        return gameToken;
+        return aiAsker.ask(prompt);
     }
 
     private String createPrompt (GameType type, GameWordCategory wordCategory) {
@@ -40,42 +48,50 @@ public class GameService {
                 .build();
     }
 
-    public void increaseQnAIndex (GameToken gameToken, int increaseCount) {
-        gameToken.setCurrentQuestionIndex(gameToken.getCurrentQuestionIndex() + increaseCount);
+    private String createGameFromAskResults (GameType type, GameWordCategory wordCategory, List<AIAskResult> askResults) {
+       Game game = new Game();
+
+       game.setType(type);
+       game.setWordCategory(wordCategory);
+
+       for (AIAskResult askResult : askResults) {
+           GameRound round = createGameRoundFromAskResult(askResult);
+           game.appendRound(round);
+       }
+
+       return gameRepository.save(game).getId();
     }
 
-    public void increaseWordIndex (GameToken gameToken, int increaseCount) {
-        gameToken.setCurrentQuestionIndex(0);
-        gameToken.setCurrentWordIndex(gameToken.getCurrentWordIndex() + increaseCount);
-    }
+    private GameRound createGameRoundFromAskResult (AIAskResult askResult) {
+        GameRound round = new GameRound();
+        round.setAnswer(askResult.getWord());
 
-    public AIAskQnAResult getCurrentQnAResult (GameToken gameToken) {
-        int wordIndex = gameToken.getCurrentWordIndex();
-        int questionIndex = gameToken.getCurrentQuestionIndex();
-
-        List<AIAskResult> askResults = gameToken.getAskResults();
-
-        if (askResults.size() <= wordIndex) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "No more words available"
-            );
+        for (AIAskQnAResult qnAResult : askResult.getQna()) {
+            GameAIResponse aiResponse = createAIResponseFromQnAResult(qnAResult);
+            round.appendAiResponse(aiResponse);
         }
 
-        List<AIAskQnAResult> qnAResults = askResults.get(wordIndex).getQna();
-
-        if (qnAResults.size() <= questionIndex) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "No more questions available"
-            );
-        }
-
-        return qnAResults.get(questionIndex);
+        return round;
     }
 
-    public GameToken parseGameToken (String encrypted) throws JoseException, JsonProcessingException {
-        String stringified = JWEEncryptor.getInstance().decrypt(encrypted);
+    private GameAIResponse createAIResponseFromQnAResult (AIAskQnAResult qnAResult) {
+        GameAIResponse aiResponse = new GameAIResponse();
+
+        aiResponse.setQuestion(qnAResult.getQuestion());
+        aiResponse.setResponse(qnAResult.getAnswer());
+
+        return aiResponse;
+    }
+
+    private GameToken createGameToken (String gameId) {
+        GameToken gameToken = new GameToken();
+        gameToken.setGameId(gameId);
+
+        return gameToken;
+    }
+
+    public GameToken parseGameToken (String signed) throws JoseException, JsonProcessingException {
+        String stringified = JWSSigner.getInstance().verify(signed);
 
         return new ObjectMapper().readValue(stringified, GameToken.class);
     }
@@ -84,12 +100,12 @@ public class GameService {
         try {
             String stringified = new ObjectMapper().writeValueAsString(gameToken);
 
-            JsonWebEncryption encrypted =
-                    JWEEncryptor
+            JsonWebSignature signed =
+                    JWSSigner
                             .getInstance()
-                            .encrypt(stringified);
+                            .sign(stringified);
 
-            return encrypted.getCompactSerialization();
+            return signed.getCompactSerialization();
         } catch (Exception e) {
             return "";
         }
