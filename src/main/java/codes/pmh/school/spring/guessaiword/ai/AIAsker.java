@@ -1,5 +1,6 @@
 package codes.pmh.school.spring.guessaiword.ai;
 
+import codes.pmh.school.spring.guessaiword.ai.datatype.AIAskQnAResult;
 import codes.pmh.school.spring.guessaiword.ai.datatype.api.AIAPIMessage;
 import codes.pmh.school.spring.guessaiword.ai.datatype.api.AIAPIRequest;
 import codes.pmh.school.spring.guessaiword.ai.datatype.api.AIAPIResult;
@@ -29,6 +30,10 @@ public class AIAsker {
 
     private String prompt;
 
+    private AIAPIResult rawResult;
+
+    private List<AIAskResult> parsedResult;
+
     private final Logger logger = LoggerFactory.getLogger(AIAsker.class);
 
     public AIAsker () {
@@ -56,7 +61,11 @@ public class AIAsker {
         setAuthorizations();
         setPOSTMethod();
         setRequestBody();
-        return parseResult(getResponseBody());
+        getResponseBody();
+        parseResult();
+        maskResult();
+
+        return this.parsedResult;
     }
 
     private void openEndpointConnection () throws IOException {
@@ -119,9 +128,11 @@ public class AIAsker {
         bodyStream.close();
     }
 
-    private AIAPIResult getResponseBody () throws IOException {
+    private void getResponseBody () throws IOException {
         String body = readResponseBodyStream();
-        return getAskResultFromString(body);
+        AIAPIResult apiResult = getAskResultFromString(body);
+
+        this.rawResult = apiResult;
     }
 
     private String readResponseBodyStream () throws IOException {
@@ -137,11 +148,23 @@ public class AIAsker {
         return objectMapper.readValue(body, AIAPIResult.class);
     }
 
-    private List<AIAskResult> parseResult (AIAPIResult apiResult) throws JsonProcessingException {
+    private void parseResult () throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        return objectMapper.readValue(apiResult.getContent(), new TypeReference<List<AIAskResult>>() {});
+        this.parsedResult = objectMapper.readValue(rawResult.getContent(), new TypeReference<List<AIAskResult>>() {});
+    }
+
+    private void maskResult () {
+       for (AIAskResult askResult : this.parsedResult)
+           maskQnA(askResult.getWord(), askResult.getQna());
+    }
+
+    private void maskQnA (String maskTarget, List<AIAskQnAResult> qnAResults) {
+        for (AIAskQnAResult qnAResult : qnAResults) {
+            qnAResult.setAnswer(qnAResult.getAnswer().replaceAll(maskTarget, "{{}}"));
+            qnAResult.setQuestion(qnAResult.getQuestion().replaceAll(maskTarget, "{{}}"));
+        }
     }
 
     private void logException (Exception exception) {
