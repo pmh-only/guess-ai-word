@@ -2,7 +2,7 @@ package codes.pmh.school.spring.guessaiword.util;
 
 public class PromptBuilder {
     private static final String PROMPT_TEMPLATE =
-            "Choose %d %s word randomly and make %d q&a examples per word. output in json array format not object format. chosen word in \"word\" field, q&a in \"qna\" field, questions are in \"result[].question\" field and answers are in \"result[].answer\". no other messages. no code block. in korean.";
+            "Choose %d %s words randomly and make %d q&a examples per word. output in json format. chosen word in \"word\" field, q&a in \"qna\" field, questions are in \"qna[].question\" field and answers are in \"qna[].answer\". no other messages. no code block. in korean. example: [{}]";
 
     private String wordCategory = "ANY";
 
