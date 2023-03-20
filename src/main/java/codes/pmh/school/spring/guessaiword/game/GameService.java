@@ -17,9 +17,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jose4j.jws.JsonWebSignature;
 import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service("gameService")
 public class GameService {
@@ -88,6 +91,52 @@ public class GameService {
         gameToken.setGameId(gameId);
 
         return gameToken;
+    }
+
+    public GameAIResponse getNextRound (String gameId) {
+        Game game = getGameById(gameId);
+        int currentRound = game.getCurrentRound();
+
+        if (game.getRounds().size() <= currentRound + 1)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Next round not found");
+
+        game.setCurrentRound(currentRound + 1);
+        gameRepository.save(game);
+
+        GameRound round = game.getRounds().get(currentRound + 1);
+
+        return round.getAiResponses().get(0);
+    }
+
+    public GameAIResponse getNextResponse (String gameId) {
+        Game game = getGameById(gameId);
+        GameRound round = game.getRounds().get(game.getCurrentRound());
+
+        int usedResponseCount = round.getUsedResponseCount();
+
+        if (round.getAiResponses().size() <= usedResponseCount + 1)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Next ai response not found");
+
+        round.setUsedResponseCount(usedResponseCount + 1);
+        gameRepository.save(game);
+
+        return round.getAiResponses().get(usedResponseCount + 1);
+    }
+
+    public GameAIResponse getCurrentResponse (String gameId) {
+        Game game = getGameById(gameId);
+        GameRound round = game.getRounds().get(game.getCurrentRound());
+
+        return round.getAiResponses().get(round.getUsedResponseCount());
+    }
+
+    public Game getGameById (String gameId) {
+        Optional<Game> gameOptional = gameRepository.findById(gameId);
+
+        if (gameOptional.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found");
+
+        return gameOptional.get();
     }
 
     public GameToken parseGameToken (String signed) throws JoseException, JsonProcessingException {

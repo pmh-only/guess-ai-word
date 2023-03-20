@@ -23,6 +23,8 @@ public class Game {
 
     private int finalScore = 0;
 
+    private int currentRound = 0;
+
     private String playerName;
 
     @CreationTimestamp()
@@ -73,6 +75,14 @@ public class Game {
 
     public void setFinalScore(int finalScore) {
         this.finalScore = finalScore;
+    }
+
+    public int getCurrentRound() {
+        return currentRound;
+    }
+
+    public void setCurrentRound(int currentRound) {
+        this.currentRound = currentRound;
     }
 
     public String getPlayerName() {

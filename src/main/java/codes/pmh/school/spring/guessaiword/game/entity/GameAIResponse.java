@@ -15,16 +15,8 @@ public class GameAIResponse {
 
     private String response;
 
-    public String getId() {
-        return id;
-    }
-
     public void setId(String id) {
         this.id = id;
-    }
-
-    public GameRound getRound() {
-        return round;
     }
 
     public void setRound(GameRound round) {
