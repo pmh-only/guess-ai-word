@@ -20,6 +20,8 @@ public class GameRound {
 
     private int usedResponseCount = 0;
 
+    private Date responseUseDate;
+
     private boolean isPlayerWin = false;
 
     private Date startedAt;
@@ -61,6 +63,14 @@ public class GameRound {
 
     public void setUsedResponseCount(int usedResponseCount) {
         this.usedResponseCount = usedResponseCount;
+    }
+
+    public Date getResponseUseDate() {
+        return responseUseDate;
+    }
+
+    public void setResponseUseDate(Date responseUseDate) {
+        this.responseUseDate = responseUseDate;
     }
 
     public boolean isPlayerWin() {
