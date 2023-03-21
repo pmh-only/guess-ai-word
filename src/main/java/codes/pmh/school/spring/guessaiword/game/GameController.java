@@ -19,7 +19,7 @@ public class GameController {
     @Autowired
     private GameService gameService;
 
-    @PostMapping()
+    @PostMapping("/createNewGame")
     private GameAPICreationResult createNewGame (
             HttpServletResponse response,
             @RequestParam(value = "type", defaultValue = "NORMAL_GAME") GameType gameType,
@@ -39,7 +39,7 @@ public class GameController {
         return creationResult;
     }
 
-    @GetMapping("/@current/rounds/@next")
+    @PostMapping("/nextRound")
     private GameAPIGetNextResult getNextRound (
             @CookieValue("GAME_TOKEN") String signedGameToken)
             throws Exception {
@@ -53,8 +53,8 @@ public class GameController {
         return getNextResult;
     }
 
-    @GetMapping("/@current/rounds/@current/responses/@next")
-    private GameAPIGetNextResult gameNextAIResponse (
+    @PostMapping("/nextAIResponse")
+    private GameAPIGetNextResult getNextAIResponse (
             @CookieValue("GAME_TOKEN") String signedGameToken)
             throws Exception {
 
@@ -67,7 +67,7 @@ public class GameController {
         return getNextResult;
     }
 
-    @PostMapping("/@current/rounds/@current/answer")
+    @PostMapping("/submitAnswer")
     private GameAPISubmitAnswerResult submitAnswer (
             @CookieValue("GAME_TOKEN") String signedGameToken,
             @RequestBody GameAPISubmitAnswerBody answerBody)
