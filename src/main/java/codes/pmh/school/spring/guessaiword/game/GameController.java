@@ -1,10 +1,7 @@
 package codes.pmh.school.spring.guessaiword.game;
 
-import codes.pmh.school.spring.guessaiword.game.datatype.api.GameAPICreationResult;
+import codes.pmh.school.spring.guessaiword.game.datatype.api.*;
 import codes.pmh.school.spring.guessaiword.game.datatype.GameToken;
-import codes.pmh.school.spring.guessaiword.game.datatype.api.GameAPIGetNextResult;
-import codes.pmh.school.spring.guessaiword.game.datatype.api.GameAPISubmitAnswerBody;
-import codes.pmh.school.spring.guessaiword.game.datatype.api.GameAPISubmitAnswerResult;
 import codes.pmh.school.spring.guessaiword.game.datatype.enums.GameType;
 import codes.pmh.school.spring.guessaiword.game.datatype.enums.GameWordCategory;
 import codes.pmh.school.spring.guessaiword.game.entity.GameAIResponse;
@@ -80,5 +77,19 @@ public class GameController {
         answerResult.setCorrect(isCorrect);
 
         return answerResult;
+    }
+
+    @PostMapping("/calculateScore")
+    private GameAPICalculateScoreResult calculateScore (
+            @CookieValue("GAME_TOKEN") String signedGameToken)
+            throws Exception {
+
+        GameToken gameToken = gameService.parseGameToken(signedGameToken);
+        GameAPICalculateScoreResult calculateScoreResult = new GameAPICalculateScoreResult();
+
+        float score = gameService.calculateGameScore(gameToken.getGameId());
+        calculateScoreResult.setScore(score);
+
+        return calculateScoreResult;
     }
 }

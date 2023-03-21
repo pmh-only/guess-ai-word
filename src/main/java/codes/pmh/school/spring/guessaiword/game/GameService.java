@@ -105,6 +105,7 @@ public class GameService {
         GameRound round = game.getRounds().get(currentRound + 1);
 
         round.setResponseUsedDate(new Date());
+        round.setStartedAt(new Date());
         gameRepository.save(game);
 
         return round.getAiResponses().get(0);
@@ -137,18 +138,10 @@ public class GameService {
         GameRound round = game.getRounds().get(game.getCurrentRound());
 
         round.setResponseUsedDate(new Date());
+        round.setStartedAt(new Date());
         gameRepository.save(game);
 
         return round.getAiResponses().get(round.getUsedResponseCount());
-    }
-
-    public Game getGameById (String gameId) {
-        Optional<Game> gameOptional = gameRepository.findById(gameId);
-
-        if (gameOptional.isEmpty())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found");
-
-        return gameOptional.get();
     }
 
     public boolean submitAnswer (String gameId, String answer) {
@@ -170,6 +163,48 @@ public class GameService {
         round.setAnswerSubmittedDate(new Date());
         gameRepository.save(game);
         return isCorrect;
+    }
+
+    public float calculateGameScore (String gameId) {
+        Game game = getGameById(gameId);
+        return (calculateRoundsScore(game) + calculateBonusScore(game)) / 10000f;
+    }
+
+    private long calculateRoundsScore (Game game) {
+        long score = 0;
+
+        for (GameRound round : game.getRounds())
+            score += calculateRoundScore(round);
+
+        return score;
+    }
+
+    private long calculateRoundScore (GameRound round) {
+        if (!round.isPlayerWin())
+            return 0;
+
+        long timeSpend = round.getWinAt().getTime() - round.getStartedAt().getTime();
+
+        return (10 * 60 * 1000 - timeSpend) - ((long) round.getUsedResponseCount() * 10 * 1000);
+    }
+
+    private long calculateBonusScore (Game game) {
+        int roundCount = game.getType().getWordCount();
+        int winRoundCount = 0;
+
+        for (GameRound round : game.getRounds())
+            winRoundCount += round.isPlayerWin() ? 1 : 0;
+
+        return winRoundCount >= roundCount ? 10000 : 0;
+    }
+
+    private Game getGameById (String gameId) {
+        Optional<Game> gameOptional = gameRepository.findById(gameId);
+
+        if (gameOptional.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found");
+
+        return gameOptional.get();
     }
 
     public GameToken parseGameToken (String signed) throws JoseException, JsonProcessingException {
