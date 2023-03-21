@@ -23,12 +23,22 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
 
-task prebuild(type:Exec) {
+task prebuild(type: Exec) {
 	if (DefaultNativePlatform.currentOperatingSystem.isWindows())
-		commandLine 'cmd', '/c', 'scripts\\buildFrontend.bat'
+		commandLine 'cmd', '/c', 'scripts\\runFrontendScript.bat', 'build'
 	else
-		commandLine 'sh', './scripts/buildFrontend.sh'
+		commandLine 'sh', './scripts/runFrontendScript.sh', 'build'
 }
 
 bootRun.dependsOn prebuild
 bootJar.dependsOn prebuild
+
+// ### Frontend Tasks ###
+
+task runDevServer(type: Exec) {
+	group = "Frontend"
+	if (DefaultNativePlatform.currentOperatingSystem.isWindows())
+		commandLine 'cmd', '/c', 'scripts\\runFrontendScript.bat', 'dev'
+	else
+		commandLine 'sh', './scripts/runFrontendScript.sh', 'dev'
+}

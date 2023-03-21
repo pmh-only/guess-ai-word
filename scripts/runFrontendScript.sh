@@ -3,13 +3,13 @@ cd src/main/resources/frontend || exit 1
 
 if which pnpm > /dev/null; then
   pnpm install
-  pnpm build
+  pnpm $1
   exit 0
 fi
 
 if which npm > /dev/null; then
   npm install
-  npm run build
+  npm run $1
   exit 0
 fi
 
