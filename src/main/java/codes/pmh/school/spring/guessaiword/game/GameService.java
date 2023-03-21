@@ -104,7 +104,7 @@ public class GameService {
         game.setCurrentRound(currentRound + 1);
         GameRound round = game.getRounds().get(currentRound + 1);
 
-        round.setResponseUseDate(new Date());
+        round.setResponseUsedDate(new Date());
         gameRepository.save(game);
 
         return round.getAiResponses().get(0);
@@ -119,14 +119,14 @@ public class GameService {
         if (round.getAiResponses().size() <= usedResponseCount + 1)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Next ai response not found");
 
-        Date responseUseDate = round.getResponseUseDate();
-        Date responseUsableDate = Date.from(responseUseDate.toInstant().plusSeconds(10));
+        Date responseUseDate = round.getResponseUsedDate();
+        Date responseUsableDate = Date.from(responseUseDate.toInstant().plusSeconds(5));
 
         if (responseUsableDate.after(new Date()))
-            throw new ResponseStatusException(HttpStatus.TOO_EARLY, "Wait 10s to get next ai response");
+            throw new ResponseStatusException(HttpStatus.TOO_EARLY, "Wait 5s to get next ai response");
 
         round.setUsedResponseCount(usedResponseCount + 1);
-        round.setResponseUseDate(new Date());
+        round.setResponseUsedDate(new Date());
         gameRepository.save(game);
 
         return round.getAiResponses().get(usedResponseCount + 1);
@@ -136,7 +136,7 @@ public class GameService {
         Game game = getGameById(gameId);
         GameRound round = game.getRounds().get(game.getCurrentRound());
 
-        round.setResponseUseDate(new Date());
+        round.setResponseUsedDate(new Date());
         gameRepository.save(game);
 
         return round.getAiResponses().get(round.getUsedResponseCount());
@@ -149,6 +149,27 @@ public class GameService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found");
 
         return gameOptional.get();
+    }
+
+    public boolean submitAnswer (String gameId, String answer) {
+        Game game = getGameById(gameId);
+        GameRound round = game.getRounds().get(game.getCurrentRound());
+
+        Date answerSubmittedDate = round.getAnswerSubmittedDate();
+        Date answerSubmittableDate = Date.from(answerSubmittedDate.toInstant().plusSeconds(5));
+
+        if (answerSubmittableDate.after(new Date()))
+            throw new ResponseStatusException(HttpStatus.TOO_EARLY, "Wait 5s to submit answer");
+
+        boolean isCorrect = round.getAnswer().equals(answer);
+        if (isCorrect) {
+            round.setPlayerWin(true);
+            round.setWinAt(new Date());
+        }
+
+        round.setAnswerSubmittedDate(new Date());
+        gameRepository.save(game);
+        return isCorrect;
     }
 
     public GameToken parseGameToken (String signed) throws JoseException, JsonProcessingException {

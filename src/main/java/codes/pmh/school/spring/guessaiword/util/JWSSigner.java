@@ -12,22 +12,17 @@ import java.security.Key;
 public class JWSSigner {
     private static JWSSigner instance;
 
-    private final Key key;
-
-    private JWSSigner() {
-        this.key = new HmacKey(ByteUtil.randomBytes(64));
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
     public static JWSSigner getInstance () {
         if (JWSSigner.instance == null)
             JWSSigner.instance = new JWSSigner();
 
         return JWSSigner.instance;
+    }
+
+    private final Key key;
+
+    private JWSSigner() {
+        this.key = new HmacKey(ByteUtil.randomBytes(64));
     }
 
     public JsonWebSignature sign (String payload) {

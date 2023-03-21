@@ -20,13 +20,15 @@ public class GameRound {
 
     private int usedResponseCount = 0;
 
-    private Date responseUseDate;
+    private Date responseUsedDate;
+
+    private Date answerSubmittedDate = new Date();
 
     private boolean isPlayerWin = false;
 
     private Date startedAt;
 
-    private Date endedAt;
+    private Date winAt;
 
     public String getId() {
         return id;
@@ -65,12 +67,20 @@ public class GameRound {
         this.usedResponseCount = usedResponseCount;
     }
 
-    public Date getResponseUseDate() {
-        return responseUseDate;
+    public Date getResponseUsedDate() {
+        return responseUsedDate;
     }
 
-    public void setResponseUseDate(Date responseUseDate) {
-        this.responseUseDate = responseUseDate;
+    public void setResponseUsedDate(Date responseUsedDate) {
+        this.responseUsedDate = responseUsedDate;
+    }
+
+    public Date getAnswerSubmittedDate() {
+        return answerSubmittedDate;
+    }
+
+    public void setAnswerSubmittedDate(Date answerSubmittedDate) {
+        this.answerSubmittedDate = answerSubmittedDate;
     }
 
     public boolean isPlayerWin() {
@@ -89,12 +99,12 @@ public class GameRound {
         this.startedAt = startedAt;
     }
 
-    public Date getEndedAt() {
-        return endedAt;
+    public Date getWinAt() {
+        return winAt;
     }
 
-    public void setEndedAt(Date endedAt) {
-        this.endedAt = endedAt;
+    public void setWinAt(Date winAt) {
+        this.winAt = winAt;
     }
 
     public Game getGame() {
