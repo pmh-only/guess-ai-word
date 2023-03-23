@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/games")
+@RequestMapping("/api/games")
 public class GameController {
     @Autowired
     private GameService gameService;
@@ -27,8 +27,8 @@ public class GameController {
         GameAIResponse aiResponse = gameService.getCurrentResponse(gameToken.getGameId());
         String stringifiedGameToken = gameService.stringifyGameToken(gameToken);
 
-        creationResult.setWordCount(gameType.getWordCount());
-        creationResult.setQnaCount(gameType.getQnACount());
+        creationResult.setRoundCount(gameType.getRoundCount());
+        creationResult.setAiResultCount(gameType.getAIResultCount());
         creationResult.setAiResponse(aiResponse);
 
         response.addCookie(new Cookie("GAME_TOKEN", stringifiedGameToken));

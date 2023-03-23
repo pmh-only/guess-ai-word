@@ -3,26 +3,26 @@ package codes.pmh.school.spring.guessaiword.game.datatype.api;
 import codes.pmh.school.spring.guessaiword.game.entity.GameAIResponse;
 
 public class GameAPICreationResult {
-    private int wordCount;
+    private int roundCount;
 
-    private int qnaCount;
+    private int aiResultCount;
 
     private GameAIResponse aiResponse;
 
-    public int getWordCount() {
-        return wordCount;
+    public int getRoundCount() {
+        return roundCount;
     }
 
-    public void setWordCount(int wordCount) {
-        this.wordCount = wordCount;
+    public void setRoundCount(int roundCount) {
+        this.roundCount = roundCount;
     }
 
-    public int getQnaCount() {
-        return qnaCount;
+    public int getAiResultCount() {
+        return aiResultCount;
     }
 
-    public void setQnaCount(int qnaCount) {
-        this.qnaCount = qnaCount;
+    public void setAiResultCount(int aiResultCount) {
+        this.aiResultCount = aiResultCount;
     }
 
     public GameAIResponse getAiResponse() {

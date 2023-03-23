@@ -46,8 +46,8 @@ public class GameService {
 
     private String createPrompt (GameType type, GameWordCategory wordCategory) {
         return new PromptBuilder()
-                .setWordCount(type.getWordCount())
-                .setQnaCount(type.getQnACount())
+                .setWordCount(type.getRoundCount())
+                .setQnaCount(type.getAIResultCount())
                 .setWordCategory(wordCategory.toString())
                 .build();
     }
@@ -189,7 +189,7 @@ public class GameService {
     }
 
     private long calculateBonusScore (Game game) {
-        int roundCount = game.getType().getWordCount();
+        int roundCount = game.getType().getRoundCount();
         int winRoundCount = 0;
 
         for (GameRound round : game.getRounds())
