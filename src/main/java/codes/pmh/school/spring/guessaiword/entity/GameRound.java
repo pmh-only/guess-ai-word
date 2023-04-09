@@ -27,7 +27,7 @@ public class GameRound {
     @ManyToOne(fetch = FetchType.LAZY)
     private Game game;
 
-    @OneToMany(mappedBy = "gameRound", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "round", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GameAskRecord> asks = new ArrayList<>();
 
     public int getId() {
