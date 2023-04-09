@@ -15,14 +15,14 @@ public class TokenService {
     private static final Key TOKEN_SECRET =
             new HmacKey(ByteUtil.randomBytes(64));
 
-    public JsonWebSignature sign (String payload) {
+    public String sign (String payload) throws JoseException {
         JsonWebSignature jws = new JsonWebSignature();
 
         jws.setAlgorithmHeaderValue(AlgorithmIdentifiers.HMAC_SHA512);
         jws.setPayload(payload);
         jws.setKey(TOKEN_SECRET);
 
-        return jws;
+        return jws.getCompactSerialization();
     }
 
     public String verify (String serializedJws) throws JoseException {

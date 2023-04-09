@@ -14,6 +14,14 @@ public class GameTokenDto {
         this.gameId = gameId;
     }
 
+    public GameTokenDto () {}
+
+    public GameTokenDto (String serialized) throws JsonProcessingException {
+        this.gameId = new ObjectMapper()
+                .readValue(serialized, GameTokenDto.class)
+                .getGameId();
+    }
+
     @Override
     public String toString() {
         try {

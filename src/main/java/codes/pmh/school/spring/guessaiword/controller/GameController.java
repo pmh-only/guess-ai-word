@@ -1,17 +1,15 @@
 package codes.pmh.school.spring.guessaiword.controller;
 
 import codes.pmh.school.spring.guessaiword.dto.GameCreationDto;
+import codes.pmh.school.spring.guessaiword.dto.GameUpdatePlayerNameDto;
 import codes.pmh.school.spring.guessaiword.model.GameCreationRequestBody;
+import codes.pmh.school.spring.guessaiword.model.GameUpdatePlayerNameRequestBody;
 import codes.pmh.school.spring.guessaiword.service.GameService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/games")
@@ -34,5 +32,19 @@ public class GameController {
 
         response.addCookie(new Cookie(
                 "GAME_TOKEN", gameCreationDto.getGameToken()));
+    }
+
+    @PostMapping("/updatePlayerName")
+    public void updatePlayerName (
+            @CookieValue("GAME_TOKEN") String gameToken,
+            @RequestBody @Valid GameUpdatePlayerNameRequestBody requestBody)
+            throws Exception {
+
+        GameUpdatePlayerNameDto updatePlayerNameDto = new GameUpdatePlayerNameDto();
+
+        updatePlayerNameDto.setGameToken(gameToken);
+        updatePlayerNameDto.setPlayerName(requestBody.getPlayerName());
+
+        gameService.updatePlayerName(updatePlayerNameDto);
     }
 }
