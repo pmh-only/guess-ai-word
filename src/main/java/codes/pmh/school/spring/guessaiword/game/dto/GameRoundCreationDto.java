@@ -7,6 +7,8 @@ public class GameRoundCreationDto implements GameIdFetchableDto, GameFetchableDt
 
     private int gameId;
 
+    private String answerWord;
+
     private String gameToken;
 
     @Override
@@ -17,6 +19,14 @@ public class GameRoundCreationDto implements GameIdFetchableDto, GameFetchableDt
     @Override
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    public String getAnswerWord() {
+        return answerWord;
+    }
+
+    public void setAnswerWord(String answerWord) {
+        this.answerWord = answerWord;
     }
 
     @Override

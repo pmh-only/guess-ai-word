@@ -1,6 +1,7 @@
-package codes.pmh.school.spring.guessaiword.game.controller;
+package codes.pmh.school.spring.guessaiword.game;
 
 import codes.pmh.school.spring.guessaiword.game.dto.GameCreationDto;
+import codes.pmh.school.spring.guessaiword.game.dto.GameRoundCreationDto;
 import codes.pmh.school.spring.guessaiword.game.dto.GameUpdatePlayerNameDto;
 import codes.pmh.school.spring.guessaiword.game.model.GameCreationRequestBody;
 import codes.pmh.school.spring.guessaiword.game.model.GameUpdatePlayerNameRequestBody;
@@ -32,6 +33,17 @@ public class GameController {
 
         response.addCookie(new Cookie(
                 "GAME_TOKEN", gameCreationDto.getGameToken()));
+    }
+
+    @PostMapping("/createNewRound")
+    public void createNewGameRound (
+            @CookieValue("GAME_TOKEN") String gameToken)
+            throws Exception {
+
+        GameRoundCreationDto roundCreationDto = new GameRoundCreationDto();
+
+        roundCreationDto.setGameToken(gameToken);
+        gameService.createGameRound(roundCreationDto);
     }
 
     @PostMapping("/updatePlayerName")

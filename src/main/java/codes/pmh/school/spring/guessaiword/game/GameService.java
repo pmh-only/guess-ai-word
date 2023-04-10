@@ -1,5 +1,7 @@
 package codes.pmh.school.spring.guessaiword.game;
 
+import codes.pmh.school.spring.guessaiword.dictionary.DictionaryServiceWordImpl;
+import codes.pmh.school.spring.guessaiword.dictionary.enums.DictionaryCategory;
 import codes.pmh.school.spring.guessaiword.game.dto.*;
 import codes.pmh.school.spring.guessaiword.game.entity.Game;
 import codes.pmh.school.spring.guessaiword.game.entity.GameRound;
@@ -21,6 +23,9 @@ public class GameService {
 
     @Autowired
     private GameTokenService gameTokenService;
+
+    @Autowired
+    private DictionaryServiceWordImpl wordDictionaryService;
 
     public GameCreationDto createGame (GameCreationDto gameCreationDto) throws Exception {
         gameCreationDto.setGame(createGameEntity(gameCreationDto));
@@ -48,12 +53,18 @@ public class GameService {
                 .sign(gameTokenDto.toString());
     }
 
-    public GameRoundCreationDto createGameRound (GameRoundCreationDto roundCreationDto) throws Exception {
+    public void createGameRound (GameRoundCreationDto roundCreationDto) throws Exception {
         getGameIdByToken(roundCreationDto);
         getGameById(roundCreationDto);
+        getRandomAnswerWord(roundCreationDto);
         createGameRoundEntity(roundCreationDto);
+    }
 
-        return roundCreationDto;
+    private void getRandomAnswerWord (GameRoundCreationDto roundCreationDto) {
+        DictionaryCategory category = roundCreationDto.getGame().getDictionaryCategory();
+        String answerWord = wordDictionaryService.getRandom(category);
+
+        roundCreationDto.setAnswerWord(answerWord);
     }
 
     private void createGameRoundEntity (GameRoundCreationDto roundCreationDto) {
@@ -61,6 +72,7 @@ public class GameService {
         GameRound gameRound = new GameRound();
 
         gameRound.setGame(game);
+        gameRound.setAnswer(roundCreationDto.getAnswerWord());
 
         gameRoundRepository.save(gameRound);
     }
