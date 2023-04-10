@@ -1,7 +1,7 @@
-package codes.pmh.school.spring.guessaiword.service;
+package codes.pmh.school.spring.guessaiword.dictionary;
 
-import codes.pmh.school.spring.guessaiword.dto.DictionaryFileContentDto;
-import codes.pmh.school.spring.guessaiword.enums.DictionaryCategory;
+import codes.pmh.school.spring.guessaiword.dictionary.dto.DictionaryFileContentDto;
+import codes.pmh.school.spring.guessaiword.dictionary.enums.DictionaryCategory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,7 +15,6 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service("dictionaryService")

@@ -1,4 +1,4 @@
-package codes.pmh.school.spring.guessaiword.entity;
+package codes.pmh.school.spring.guessaiword.game.entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;

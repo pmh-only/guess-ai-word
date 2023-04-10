@@ -1,7 +1,7 @@
-package codes.pmh.school.spring.guessaiword.model;
+package codes.pmh.school.spring.guessaiword.game.model;
 
-import codes.pmh.school.spring.guessaiword.enums.DictionaryCategory;
-import codes.pmh.school.spring.guessaiword.enums.GameType;
+import codes.pmh.school.spring.guessaiword.dictionary.enums.DictionaryCategory;
+import codes.pmh.school.spring.guessaiword.game.enums.GameType;
 import jakarta.validation.constraints.NotNull;
 
 public class GameCreationRequestBody {

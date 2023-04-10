@@ -1,6 +1,6 @@
-package codes.pmh.school.spring.guessaiword.repository;
+package codes.pmh.school.spring.guessaiword.game.repository;
 
-import codes.pmh.school.spring.guessaiword.entity.GameAskRecord;
+import codes.pmh.school.spring.guessaiword.game.entity.GameAskRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

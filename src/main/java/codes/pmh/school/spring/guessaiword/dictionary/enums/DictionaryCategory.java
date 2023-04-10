@@ -1,4 +1,4 @@
-package codes.pmh.school.spring.guessaiword.enums;
+package codes.pmh.school.spring.guessaiword.dictionary.enums;
 
 public enum DictionaryCategory {
     ANY,

@@ -1,6 +1,6 @@
-package codes.pmh.school.spring.guessaiword.dto;
+package codes.pmh.school.spring.guessaiword.game.dto;
 
-import codes.pmh.school.spring.guessaiword.entity.Game;
+import codes.pmh.school.spring.guessaiword.game.entity.Game;
 
 public class GameUpdatePlayerNameDto implements GameIdFetchableDto, GameFetchableDto {
     private String gameToken;

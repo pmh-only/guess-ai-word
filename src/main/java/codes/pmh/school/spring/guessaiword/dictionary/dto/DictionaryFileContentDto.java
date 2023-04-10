@@ -1,6 +1,6 @@
-package codes.pmh.school.spring.guessaiword.dto;
+package codes.pmh.school.spring.guessaiword.dictionary.dto;
 
-import codes.pmh.school.spring.guessaiword.enums.DictionaryCategory;
+import codes.pmh.school.spring.guessaiword.dictionary.enums.DictionaryCategory;
 
 public class DictionaryFileContentDto {
     private DictionaryCategory category;

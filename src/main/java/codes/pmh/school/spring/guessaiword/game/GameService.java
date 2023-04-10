@@ -1,8 +1,10 @@
-package codes.pmh.school.spring.guessaiword.service;
+package codes.pmh.school.spring.guessaiword.game;
 
-import codes.pmh.school.spring.guessaiword.dto.*;
-import codes.pmh.school.spring.guessaiword.entity.Game;
-import codes.pmh.school.spring.guessaiword.repository.GameRepository;
+import codes.pmh.school.spring.guessaiword.game.dto.*;
+import codes.pmh.school.spring.guessaiword.game.entity.Game;
+import codes.pmh.school.spring.guessaiword.game.entity.GameRound;
+import codes.pmh.school.spring.guessaiword.game.repository.GameRepository;
+import codes.pmh.school.spring.guessaiword.game.repository.GameRoundRepository;
 import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,9 @@ import org.springframework.web.server.ResponseStatusException;
 public class GameService {
     @Autowired
     private GameRepository gameRepository;
+
+    @Autowired
+    private GameRoundRepository gameRoundRepository;
 
     @Autowired
     private TokenService tokenService;
@@ -41,6 +46,23 @@ public class GameService {
 
         return tokenService
                 .sign(gameTokenDto.toString());
+    }
+
+    public GameRoundCreationDto createGameRound (GameRoundCreationDto roundCreationDto) throws Exception {
+        getGameIdByToken(roundCreationDto);
+        getGameById(roundCreationDto);
+        createGameRoundEntity(roundCreationDto);
+
+        return roundCreationDto;
+    }
+
+    private void createGameRoundEntity (GameRoundCreationDto roundCreationDto) {
+        Game game = roundCreationDto.getGame();
+        GameRound gameRound = new GameRound();
+
+        gameRound.setGame(game);
+
+        gameRoundRepository.save(gameRound);
     }
 
     public void updatePlayerName (GameUpdatePlayerNameDto updatePlayerNameDto) throws Exception {

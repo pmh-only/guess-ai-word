@@ -1,7 +1,7 @@
-package codes.pmh.school.spring.guessaiword.entity;
+package codes.pmh.school.spring.guessaiword.game.entity;
 
-import codes.pmh.school.spring.guessaiword.enums.DictionaryCategory;
-import codes.pmh.school.spring.guessaiword.enums.GameType;
+import codes.pmh.school.spring.guessaiword.dictionary.enums.DictionaryCategory;
+import codes.pmh.school.spring.guessaiword.game.enums.GameType;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 

@@ -1,4 +1,4 @@
-package codes.pmh.school.spring.guessaiword.model;
+package codes.pmh.school.spring.guessaiword.game.model;
 
 import jakarta.validation.constraints.NotNull;
 

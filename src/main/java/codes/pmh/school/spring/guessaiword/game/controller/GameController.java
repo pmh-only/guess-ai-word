@@ -1,10 +1,10 @@
-package codes.pmh.school.spring.guessaiword.controller;
+package codes.pmh.school.spring.guessaiword.game.controller;
 
-import codes.pmh.school.spring.guessaiword.dto.GameCreationDto;
-import codes.pmh.school.spring.guessaiword.dto.GameUpdatePlayerNameDto;
-import codes.pmh.school.spring.guessaiword.model.GameCreationRequestBody;
-import codes.pmh.school.spring.guessaiword.model.GameUpdatePlayerNameRequestBody;
-import codes.pmh.school.spring.guessaiword.service.GameService;
+import codes.pmh.school.spring.guessaiword.game.dto.GameCreationDto;
+import codes.pmh.school.spring.guessaiword.game.dto.GameUpdatePlayerNameDto;
+import codes.pmh.school.spring.guessaiword.game.model.GameCreationRequestBody;
+import codes.pmh.school.spring.guessaiword.game.model.GameUpdatePlayerNameRequestBody;
+import codes.pmh.school.spring.guessaiword.game.GameService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;

@@ -1,6 +1,4 @@
-package codes.pmh.school.spring.guessaiword.dto;
-
-import codes.pmh.school.spring.guessaiword.entity.Game;
+package codes.pmh.school.spring.guessaiword.game.dto;
 
 public interface GameIdFetchableDto {
     public String getGameToken();

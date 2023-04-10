@@ -1,8 +1,8 @@
-package codes.pmh.school.spring.guessaiword.dto;
+package codes.pmh.school.spring.guessaiword.game.dto;
 
-import codes.pmh.school.spring.guessaiword.entity.Game;
-import codes.pmh.school.spring.guessaiword.enums.DictionaryCategory;
-import codes.pmh.school.spring.guessaiword.enums.GameType;
+import codes.pmh.school.spring.guessaiword.game.entity.Game;
+import codes.pmh.school.spring.guessaiword.dictionary.enums.DictionaryCategory;
+import codes.pmh.school.spring.guessaiword.game.enums.GameType;
 
 public class GameCreationDto {
     private Game game;

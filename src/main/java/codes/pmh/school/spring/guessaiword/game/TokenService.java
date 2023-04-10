@@ -1,4 +1,4 @@
-package codes.pmh.school.spring.guessaiword.service;
+package codes.pmh.school.spring.guessaiword.game;
 
 import org.jose4j.jwa.AlgorithmConstraints;
 import org.jose4j.jws.AlgorithmIdentifiers;
