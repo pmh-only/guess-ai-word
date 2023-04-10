@@ -1,0 +1,14 @@
+[
+  { "category": "FRUITS", "content": "사과" },
+  { "category": "FRUITS", "content": "귤" },
+  { "category": "FRUITS", "content": "오렌지" },
+  { "category": "FRUITS", "content": "딸기" },
+  { "category": "FRUITS", "content": "배" },
+  { "category": "FRUITS", "content": "포도" },
+  { "category": "FRUITS", "content": "자두" },
+  { "category": "FRUITS", "content": "자몽" },
+  { "category": "FRUITS", "content": "수박" },
+  { "category": "FRUITS", "content": "복숭아" },
+  { "category": "FRUITS", "content": "토마토" },
+  { "category": "FRUITS", "content": "체리" }
+]

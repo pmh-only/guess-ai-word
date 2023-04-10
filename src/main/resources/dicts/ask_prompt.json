@@ -1,0 +1,7 @@
+[
+  { "category": "FRUITS", "content": "%s(은)는 무슨 맛인가요?" },
+  { "category": "FRUITS", "content": "%s(은)는 어디서 주로 자라나요?" },
+  { "category": "FRUITS", "content": "%s는 어떤 모양인가요?" },
+  { "category": "FRUITS", "content": "%s는 어떤 색깔인가요?" },
+  { "category": "FRUITS", "content": "%s를 섭취했을때 효능은 무엇인가요?" }
+]
