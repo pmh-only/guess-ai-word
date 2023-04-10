@@ -1,14 +1,410 @@
 [
-  { "category": "FRUITS", "content": "사과" },
-  { "category": "FRUITS", "content": "귤" },
-  { "category": "FRUITS", "content": "오렌지" },
-  { "category": "FRUITS", "content": "딸기" },
-  { "category": "FRUITS", "content": "배" },
-  { "category": "FRUITS", "content": "포도" },
-  { "category": "FRUITS", "content": "자두" },
-  { "category": "FRUITS", "content": "자몽" },
-  { "category": "FRUITS", "content": "수박" },
-  { "category": "FRUITS", "content": "복숭아" },
-  { "category": "FRUITS", "content": "토마토" },
-  { "category": "FRUITS", "content": "체리" }
+  {
+    "category": "FRUITS",
+    "content": "사과"
+  },
+  {
+    "category": "FRUITS",
+    "content": "바나나"
+  },
+  {
+    "category": "FRUITS",
+    "content": "오렌지"
+  },
+  {
+    "category": "FRUITS",
+    "content": "딸기"
+  },
+  {
+    "category": "FRUITS",
+    "content": "블루베리"
+  },
+  {
+    "category": "FRUITS",
+    "content": "수박"
+  },
+  {
+    "category": "FRUITS",
+    "content": "참외"
+  },
+  {
+    "category": "FRUITS",
+    "content": "파인애플"
+  },
+  {
+    "category": "FRUITS",
+    "content": "망고"
+  },
+  {
+    "category": "FRUITS",
+    "content": "포도"
+  },
+  {
+    "category": "FRUITS",
+    "content": "레몬"
+  },
+  {
+    "category": "FRUITS",
+    "content": "자몽"
+  },
+  {
+    "category": "FRUITS",
+    "content": "복숭아"
+  },
+  {
+    "category": "FRUITS",
+    "content": "배"
+  },
+  {
+    "category": "FRUITS",
+    "content": "체리"
+  },
+  {
+    "category": "FRUITS",
+    "content": "밤"
+  },
+  {
+    "category": "FRUITS",
+    "content": "감"
+  },
+  {
+    "category": "FRUITS",
+    "content": "살구"
+  },
+  {
+    "category": "FRUITS",
+    "content": "무화과"
+  },
+  {
+    "category": "FRUITS",
+    "content": "오디"
+  },
+  {
+    "category": "FRUITS",
+    "content": "두리안"
+  },
+  {
+    "category": "FRUITS",
+    "content": "키위"
+  },
+  {
+    "category": "FRUITS",
+    "content": "자두"
+  },
+  {
+    "category": "FRUITS",
+    "content": "아보카도"
+  },
+  {
+    "category": "FRUITS",
+    "content": "토마토"
+  },
+  {
+    "category": "FRUITS",
+    "content": "라즈베리"
+  },
+  {
+    "category": "FRUITS",
+    "content": "청포도"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "개"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "고양이"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "코끼리"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "캥거루"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "기린"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "원숭이"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "호랑이"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "사자"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "팬더"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "고릴라"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "하마"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "비버"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "사슴"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "물개"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "독수리"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "카멜레온"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "악어"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "오리"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "닭"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "타조"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "앵무새"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "고슴도치"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "두더지"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "북극곰"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "바다표범"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "하이에나"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "수달"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "펭귄"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "오랑우탄"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "코뿔소"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "사슴벌레"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "비둘기"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "고래"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "낙타"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "물소"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "사마귀"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "바다뱀"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "박쥐"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "물개"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "거위"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "양"
+  },
+  {
+    "category": "TOOLS",
+    "content": "망치"
+  },
+  {
+    "category": "TOOLS",
+    "content": "드라이버"
+  },
+  {
+    "category": "TOOLS",
+    "content": "전기 드릴"
+  },
+  {
+    "category": "TOOLS",
+    "content": "톱"
+  },
+  {
+    "category": "TOOLS",
+    "content": "칼"
+  },
+  {
+    "category": "TOOLS",
+    "content": "바늘"
+  },
+  {
+    "category": "TOOLS",
+    "content": "못"
+  },
+  {
+    "category": "TOOLS",
+    "content": "모래지게"
+  },
+  {
+    "category": "TOOLS",
+    "content": "커팅칼"
+  },
+  {
+    "category": "TOOLS",
+    "content": "실"
+  },
+  {
+    "category": "TOOLS",
+    "content": "바늘뜨기"
+  },
+  {
+    "category": "TOOLS",
+    "content": "미니 드라이버"
+  },
+  {
+    "category": "TOOLS",
+    "content": "테이프"
+  },
+  {
+    "category": "TOOLS",
+    "content": "니퍼"
+  },
+  {
+    "category": "TOOLS",
+    "content": "스크류"
+  },
+  {
+    "category": "TOOLS",
+    "content": "웬치"
+  },
+  {
+    "category": "TOOLS",
+    "content": "손전등"
+  },
+  {
+    "category": "TOOLS",
+    "content": "미니팬치"
+  },
+  {
+    "category": "TOOLS",
+    "content": "이젤"
+  },
+  {
+    "category": "TOOLS",
+    "content": "스크류드라이버"
+  },
+  {
+    "category": "TOOLS",
+    "content": "접착제"
+  },
+  {
+    "category": "TOOLS",
+    "content": "볼펜"
+  },
+  {
+    "category": "TOOLS",
+    "content": "연필"
+  },
+  {
+    "category": "TOOLS",
+    "content": "색연필"
+  },
+  {
+    "category": "TOOLS",
+    "content": "호칭기"
+  },
+  {
+    "category": "TOOLS",
+    "content": "커플러"
+  },
+  {
+    "category": "TOOLS",
+    "content": "유리막대기"
+  },
+  {
+    "category": "TOOLS",
+    "content": "측정테이프"
+  },
+  {
+    "category": "TOOLS",
+    "content": "케이블 커터"
+  },
+  {
+    "category": "TOOLS",
+    "content": "와이어 스트리퍼"
+  },
+  {
+    "category": "TOOLS",
+    "content": "핀셋"
+  },
+  {
+    "category": "TOOLS",
+    "content": "젖병"
+  },
+  {
+    "category": "TOOLS",
+    "content": "마스킹 테이프"
+  },
+  {
+    "category": "TOOLS",
+    "content": "마커"
+  }
 ]

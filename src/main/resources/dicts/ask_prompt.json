@@ -1,7 +1,386 @@
 [
-  { "category": "FRUITS", "content": "%s(은)는 무슨 맛인가요?" },
-  { "category": "FRUITS", "content": "%s(은)는 어디서 주로 자라나요?" },
-  { "category": "FRUITS", "content": "%s는 어떤 모양인가요?" },
-  { "category": "FRUITS", "content": "%s는 어떤 색깔인가요?" },
-  { "category": "FRUITS", "content": "%s를 섭취했을때 효능은 무엇인가요?" }
+  {
+    "category": "FRUITS",
+    "content": "%s(은)는 무슨 맛인가요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(은)는 어떤 모양인가요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(을)를 주로 어떻게 먹나요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(은)는 어디서 자랍니까?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s의 역사는 어떻게 될까요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(은)는 어떻게 보관하면 좋을까요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(은)는 어떤 영양소를 가지고 있나요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(은)는 몇 가지 종류가 있나요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(은)는 어떤 조건에서 재배되나요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(을)를 이용한 요리는 어떤 것이 있나요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(은)는 어떻게 수확하나요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(은)는 어떤 계절에 가장 잘 맛있게 먹을 수 있나요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(은)는 세계 어디에서 가장 많이 재배되고 있나요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(은)는 다른 과일과 어떤 차이점이 있나요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s의 색상이 어떤 이유로 결정되나요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(은)는 어떤 산도를 가지고 있나요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s의 특징적인 향은 어떻게 형성되나요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(을)를 먹는 것이 건강에 좋은 이유는 무엇인가요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(은)는 어떤 가격대로 판매되고 있나요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(을)를 재배할 때 주의해야 할 점은 무엇인가요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(을)를 사용한 유명한 음식이 무엇인가요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s가 사용되는 의학적 용도는 무엇인가요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(은)는 왜 노화를 막는 데 도움이 되나요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(은)는 대체로 언제 수확될까요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(을)를 살 때 어떤 것을 고르는 것이 좋나요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s가 섭취할 때 어떤 효과가 있나요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(을)를 재배하는 데 어떤 기술이 사용되고 있나요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(은)는 다른 과일과 비교해서 어떤 단점이 있나요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(을)를 먹는 것이 체중 감량에 도움이 되나요?"
+  },
+  {
+    "category": "FRUITS",
+    "content": "%s(을)를 먹으면 어떤 건강 이점이 있나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 어떤 종류인가요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 어떤 털을 가지고 있나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s의 크기는 어느 정도인가요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 몇 살까요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 어디에서 주로 서식하나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s의 생태에 대해 알려주세요."
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 육식 동물인가요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 어떤 먹이를 선호하나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 먹이 사슬에서 어디에 위치하나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 일반적으로 어떤 행동을 하나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 어떤 소리를 내나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s의 몸무게는 어느 정도인가요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 어떤 색깔을 가지고 있나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s의 발자국은 어떻게 생겼나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 밤에 활동하나요, 아니면 주간에 활동하나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 짝짓기를 언제 하나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 일년 중 언제 새끼를 낳나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 얼마나 오래 살 수 있나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 인간에게 위협적인가요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 번식을 위해 이주하는가요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 야생에서 어떻게 생활하나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 집에서 기르기 쉬운 동물인가요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 반려동물로 인기가 있나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 암컷과 수컷을 어떻게 구분할 수 있나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 어떤 지역에서 발견될 수 있나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 어떤 기술을 사용해서 먹이를 잡나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 어떤 동물과 공생하나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 어떤 특이한 행동이나 습관이 있나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 어떤 질병이나 위험에 노출될 수 있나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 생태계에서 어떤 역할을 하고 있나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 대략 몇 마리가 서식하고 있나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 다른 동물과의 상호작용이 어떤가요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 어떤 방식으로 숨쉬나요?"
+  },
+  {
+    "category": "ANIMALS",
+    "content": "%s(은)는 어떤 특징을 가진 동물인가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(은)는 어떤 재질로 만들어져 있나요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s의 무게는 얼마나 되나요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용하기 전에 어떤 안전조치를 취해야 하나요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용하기 위해서는 어떤 기술이 필요한가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s의 크기는 어느 정도인가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용하는 방법을 자세히 알려주세요."
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s의 제조사는 누구인가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용하는데 필요한 부품이 있나요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용해 본 후에 어떤 느낌인가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 어디서 구매할 수 있나요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용하면서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용하기 위해 필요한 공간이 어느 정도인가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용하면서 어떤 문제점이 발생할 수 있나요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용하면서 편리한 점은 무엇인가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용하면서 불편한 점은 무엇인가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용하기 전에 어떤 기초지식이 필요한가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s의 가격대는 어느 정도인가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용하면서 꼭 필요한 악세사리는 무엇인가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용하면서 어떤 기술이 더 필요한가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용하면서 어떤 상황에서 유용한가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용하면서 어떤 상황에서 불편한가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용하는데 필요한 에너지원은 어떤 것들이 있나요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용하기 전에 필요한 유지보수 방법은 무엇인가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용하는데 필요한 최소한의 안전장비는 무엇인가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용하는데 얼마나 많은 힘이 필요한가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용하면서 자주 발생하는 문제는 무엇인가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용해서 만들 수 있는 것들 중에서 가장 인기 있는 것은 무엇인가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용할 때 꼭 기억해야 할 팁은 무엇인가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용해서 만들 수 있는 작품 중에서 가장 복잡한 것은 무엇인가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용해서 만들 수 있는 작품 중에서 가장 간단한 것은 무엇인가요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용해서 만들어진 역사적인 작품이 있나요?"
+  },
+  {
+    "category": "TOOLS",
+    "content": "%s(을)를 사용하면서 개선할 수 있는 부분은 무엇인가요?"
+  }
 ]
