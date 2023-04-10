@@ -1,8 +1,10 @@
 package codes.pmh.school.spring.guessaiword.game;
 
+import codes.pmh.school.spring.guessaiword.game.dto.GameAskCandidateCreationDto;
 import codes.pmh.school.spring.guessaiword.game.dto.GameCreationDto;
 import codes.pmh.school.spring.guessaiword.game.dto.GameRoundCreationDto;
 import codes.pmh.school.spring.guessaiword.game.dto.GameUpdatePlayerNameDto;
+import codes.pmh.school.spring.guessaiword.game.model.GameAskCandidateCreationResponseBody;
 import codes.pmh.school.spring.guessaiword.game.model.GameCreationRequestBody;
 import codes.pmh.school.spring.guessaiword.game.model.GameUpdatePlayerNameRequestBody;
 import codes.pmh.school.spring.guessaiword.game.GameService;
@@ -44,6 +46,23 @@ public class GameController {
 
         roundCreationDto.setGameToken(gameToken);
         gameService.createGameRound(roundCreationDto);
+    }
+
+    @PostMapping("/createAskCandidate")
+    public GameAskCandidateCreationResponseBody createGameAskPromptCandidate (
+            @CookieValue("GAME_TOKEN") String gameToken)
+            throws Exception {
+
+        GameAskCandidateCreationDto candidateCreationDto = new GameAskCandidateCreationDto();
+        GameAskCandidateCreationResponseBody responseBody = new GameAskCandidateCreationResponseBody();
+
+        candidateCreationDto.setGameToken(gameToken);
+        gameService.createAskCandidate(candidateCreationDto);
+
+        responseBody.setCandidates(candidateCreationDto.getCandidates());
+        responseBody.setCandidateSecret(candidateCreationDto.getCandidateSecret());
+
+        return responseBody;
     }
 
     @PostMapping("/updatePlayerName")
