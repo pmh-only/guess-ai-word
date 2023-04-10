@@ -20,7 +20,7 @@ public class GameService {
     private GameRoundRepository gameRoundRepository;
 
     @Autowired
-    private TokenService tokenService;
+    private GameTokenService gameTokenService;
 
     public GameCreationDto createGame (GameCreationDto gameCreationDto) throws Exception {
         gameCreationDto.setGame(createGameEntity(gameCreationDto));
@@ -44,7 +44,7 @@ public class GameService {
 
         gameTokenDto.setGameId(game.getId());
 
-        return tokenService
+        return gameTokenService
                 .sign(gameTokenDto.toString());
     }
 
@@ -92,7 +92,7 @@ public class GameService {
 
     private void getGameIdByToken (GameIdFetchableDto gameIdFetchableDto) throws Exception {
         String gameToken = gameIdFetchableDto.getGameToken();
-        GameTokenDto tokenDto = new GameTokenDto(tokenService.verify(gameToken));
+        GameTokenDto tokenDto = new GameTokenDto(gameTokenService.verify(gameToken));
 
         gameIdFetchableDto.setGameId(tokenDto.getGameId());
     }

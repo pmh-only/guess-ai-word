@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.security.Key;
 
 @Service("tokenService")
-public class TokenService {
+public class GameTokenService {
     private static final Key TOKEN_SECRET =
             new HmacKey(ByteUtil.randomBytes(64));
 
