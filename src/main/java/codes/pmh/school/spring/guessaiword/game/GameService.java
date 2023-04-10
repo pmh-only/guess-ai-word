@@ -6,6 +6,7 @@ import codes.pmh.school.spring.guessaiword.dictionary.enums.DictionaryCategory;
 import codes.pmh.school.spring.guessaiword.game.dto.*;
 import codes.pmh.school.spring.guessaiword.game.entity.Game;
 import codes.pmh.school.spring.guessaiword.game.entity.GameAskCandidate;
+import codes.pmh.school.spring.guessaiword.game.entity.GameAskRecord;
 import codes.pmh.school.spring.guessaiword.game.entity.GameRound;
 import codes.pmh.school.spring.guessaiword.game.enums.GameType;
 import codes.pmh.school.spring.guessaiword.game.repository.GameAskCandidateRepository;
@@ -72,8 +73,19 @@ public class GameService {
     public void createGameRound (GameRoundCreationDto roundCreationDto) throws Exception {
         getGameIdByToken(roundCreationDto);
         getGameById(roundCreationDto);
+
+        if (isGameRoundCreatable(roundCreationDto))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
         getRandomAnswerWord(roundCreationDto);
         createGameRoundEntity(roundCreationDto);
+    }
+
+    public boolean isGameRoundCreatable (GameRoundCreationDto roundCreationDto) {
+        Game game = roundCreationDto.getGame();
+        List<GameRound> rounds = game.getRounds();
+
+        return rounds.size() < game.getGameType().getMaxRoundCount();
     }
 
     private void getRandomAnswerWord (GameRoundCreationDto roundCreationDto) {
@@ -111,10 +123,14 @@ public class GameService {
     private boolean isAskCandidateCreatable (GameAskCandidateCreationDto candidateCreationDto) {
         Game game = candidateCreationDto.getGame();
         GameRound gameRound = candidateCreationDto.getGameRound();
+        List<GameAskRecord> askRecords = gameRound.getAsks();
         Date lastAskedAt = gameRound.getLastAskedAt();
 
         if (lastAskedAt == null)
             return true;
+
+        if (askRecords.size() >= game.getGameType().getMaxAskableCount())
+            return false;
 
         Duration throttleSecond = Duration.ofSeconds(game.getGameType().getAskThrottleSecond());
         Instant throttleExpireAt = lastAskedAt.toInstant().plus(throttleSecond);
