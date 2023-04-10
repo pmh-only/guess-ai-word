@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,30 +16,21 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service("dictionaryService")
-public class DictionaryService {
+public class DictionaryServiceImpl implements DictionaryRandomable {
     private ResourceLoader resourceLoader = new DefaultResourceLoader();
 
-    private List<DictionaryFileContentDto> words;
+    private List<DictionaryFileContentDto> dictionary;
 
-    private List<DictionaryFileContentDto> askPrompts;
-
-    public DictionaryService () throws IOException {
-        loadDictionaryResource();
+    public DictionaryServiceImpl(String classpath) throws IOException {
+        loadDictionaryResource(classpath);
     }
 
-    private void loadDictionaryResource () throws IOException {
-        Resource wordDictionaryResource =
-                resourceLoader.getResource("classpath:dicts/word.json");
+    private void loadDictionaryResource (String classpath) throws IOException {
+        Resource dictionaryResource =
+                resourceLoader.getResource(classpath);
 
-        Resource askPromptsDictionaryResource =
-                resourceLoader.getResource("classpath:dicts/ask_prompt.json");
-
-        this.words =
-                parseDictionaryResource(wordDictionaryResource);
-
-        this.askPrompts =
-                parseDictionaryResource(askPromptsDictionaryResource);
+        this.dictionary =
+                parseDictionaryResource(dictionaryResource);
     }
 
     private List<DictionaryFileContentDto> parseDictionaryResource (Resource dictionaryResource) throws IOException {
@@ -61,25 +51,11 @@ public class DictionaryService {
         return new String(dictionaryBytes, StandardCharsets.UTF_8);
     }
 
-    public String getRandomWord (DictionaryCategory category) {
-        List<DictionaryFileContentDto> filteredDictionary = this.words;
+    public String getRandom (DictionaryCategory category) {
+        List<DictionaryFileContentDto> filteredDictionary = this.dictionary;
 
         if (category != DictionaryCategory.ANY)
-                filteredDictionary = this.words
-                    .stream()
-                    .filter(v -> v.getCategory() == category)
-                    .collect(Collectors.toList());
-
-        Collections.shuffle(filteredDictionary);
-
-        return filteredDictionary.get(0).getContent();
-    }
-
-    public String getRandomAskPrompt (DictionaryCategory category) {
-        List<DictionaryFileContentDto> filteredDictionary = this.askPrompts;
-
-        if (category != DictionaryCategory.ANY)
-            filteredDictionary = this.askPrompts
+                filteredDictionary = this.dictionary
                     .stream()
                     .filter(v -> v.getCategory() == category)
                     .collect(Collectors.toList());
