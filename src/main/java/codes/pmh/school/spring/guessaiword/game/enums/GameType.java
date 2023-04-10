@@ -1,30 +1,37 @@
 package codes.pmh.school.spring.guessaiword.game.enums;
 
 public enum GameType {
-    NORMAL (1, 5, 3),
-    SPEED_RUN (5, 5, 2);
+    NORMAL,
+    SPEEDRUN {
+        @Override
+        public int getMaxRoundCount() {
+            return 5;
+        }
 
-    private int maxRoundCount = 0;
+        @Override
+        public int getMaxAskableCount() {
+            return 100;
+        }
 
-    private int maxAskableCount = 0;
-
-    private int candidateCount = 0;
-
-    private GameType (int maxRoundCount, int maxAskableCount, int candidateCount) {
-        this.maxRoundCount = maxRoundCount;
-        this.maxAskableCount = maxAskableCount;
-        this.candidateCount = candidateCount;
-    }
+        @Override
+        public int getAskThrottleSecond() {
+            return 1;
+        }
+    };
 
     public int getMaxRoundCount () {
-        return this.maxRoundCount;
+        return 1;
     }
 
     public int getMaxAskableCount() {
-        return  this.maxAskableCount;
+        return 5;
     }
 
     public int getCandidateCount() {
-        return candidateCount;
+        return 3;
+    }
+
+    public int getAskThrottleSecond() {
+        return 5;
     }
 }

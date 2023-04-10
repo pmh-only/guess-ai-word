@@ -1,14 +1,17 @@
 package codes.pmh.school.spring.guessaiword.game.dto;
 
 import codes.pmh.school.spring.guessaiword.game.entity.Game;
+import codes.pmh.school.spring.guessaiword.game.entity.GameRound;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameAskCandidateCreationDto implements GameIdFetchableDto, GameFetchableDto {
+public class GameAskCandidateCreationDto implements GameIdFetchableDto, GameFetchableDto, GameRoundFetchableDto {
     private String gameToken;
 
     private Game game;
+
+    private GameRound gameRound;
 
     private int gameId;
 
@@ -24,6 +27,16 @@ public class GameAskCandidateCreationDto implements GameIdFetchableDto, GameFetc
     @Override
     public void setGameToken(String gameToken) {
         this.gameToken = gameToken;
+    }
+
+    @Override
+    public GameRound getGameRound() {
+        return this.gameRound;
+    }
+
+    @Override
+    public void setGameRound(GameRound gameRound) {
+        this.gameRound = gameRound;
     }
 
     @Override

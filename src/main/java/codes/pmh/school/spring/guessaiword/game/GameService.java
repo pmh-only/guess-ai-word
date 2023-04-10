@@ -17,6 +17,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -93,10 +96,30 @@ public class GameService {
     public GameAskCandidateCreationDto createAskCandidate (GameAskCandidateCreationDto candidateCreationDto) throws Exception {
         getGameIdByToken(candidateCreationDto);
         getGameById(candidateCreationDto);
+        getGameRoundByGame(candidateCreationDto);
+
+        if (!isAskCandidateCreatable(candidateCreationDto))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
         createAskCandidateList(candidateCreationDto);
         saveCandidateList(candidateCreationDto);
+        saveAskedAt(candidateCreationDto);
 
         return candidateCreationDto;
+    }
+
+    private boolean isAskCandidateCreatable (GameAskCandidateCreationDto candidateCreationDto) {
+        Game game = candidateCreationDto.getGame();
+        GameRound gameRound = candidateCreationDto.getGameRound();
+        Date lastAskedAt = gameRound.getLastAskedAt();
+
+        if (lastAskedAt == null)
+            return true;
+
+        Duration throttleSecond = Duration.ofSeconds(game.getGameType().getAskThrottleSecond());
+        Instant throttleExpireAt = lastAskedAt.toInstant().plus(throttleSecond);
+
+        return throttleExpireAt.isBefore(new Date().toInstant());
     }
 
     private void createAskCandidateList (GameAskCandidateCreationDto candidateCreationDto) {
@@ -136,6 +159,13 @@ public class GameService {
         candidateCreationDto.setCandidateSecret(candidateSecret);
     }
 
+    private void saveAskedAt (GameAskCandidateCreationDto candidateCreationDto) {
+        GameRound round = candidateCreationDto.getGameRound();
+        round.setLastAskedAt(new Date());
+
+        gameRoundRepository.save(round);
+    }
+
     public void updatePlayerName (GameUpdatePlayerNameDto updatePlayerNameDto) throws Exception {
         getGameIdByToken(updatePlayerNameDto);
         getGameById(updatePlayerNameDto);
@@ -172,5 +202,12 @@ public class GameService {
         Game game = gameRepository.getReferenceById(gameFetchableDto.getGameId());
 
         gameFetchableDto.setGame(game);
+    }
+
+    private void getGameRoundByGame (GameRoundFetchableDto roundFetchableDto) {
+        Game game = roundFetchableDto.getGame();
+        List<GameRound> rounds = game.getRounds();
+
+        roundFetchableDto.setGameRound(rounds.get(rounds.size() - 1));
     }
 }
