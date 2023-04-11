@@ -1,12 +1,8 @@
 package codes.pmh.school.spring.guessaiword.game;
 
-import codes.pmh.school.spring.guessaiword.game.dto.GameAskCandidateCreationDto;
-import codes.pmh.school.spring.guessaiword.game.dto.GameCreationDto;
-import codes.pmh.school.spring.guessaiword.game.dto.GameRoundCreationDto;
-import codes.pmh.school.spring.guessaiword.game.dto.GameUpdatePlayerNameDto;
-import codes.pmh.school.spring.guessaiword.game.model.GameAskCandidateCreationResponseBody;
-import codes.pmh.school.spring.guessaiword.game.model.GameCreationRequestBody;
-import codes.pmh.school.spring.guessaiword.game.model.GameUpdatePlayerNameRequestBody;
+import codes.pmh.school.spring.guessaiword.ai.dto.AIAskDto;
+import codes.pmh.school.spring.guessaiword.game.dto.*;
+import codes.pmh.school.spring.guessaiword.game.model.*;
 import codes.pmh.school.spring.guessaiword.game.GameService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -61,6 +57,29 @@ public class GameController {
 
         responseBody.setCandidates(candidateCreationDto.getCandidates());
         responseBody.setCandidateSecret(candidateCreationDto.getCandidateSecret());
+
+        return responseBody;
+    }
+
+    @PostMapping("/askToAI")
+    public GameAskToAIResponseBody askToAIWithCandidate (
+            @CookieValue("GAME_TOKEN") String gameToken,
+            @RequestBody @Valid GameAskToAIRequestBody requestBody)
+            throws Exception {
+
+        GameAskToAIDto askToAIDto = new GameAskToAIDto();
+        GameAskToAIResponseBody responseBody = new GameAskToAIResponseBody();
+
+        askToAIDto.setGameToken(gameToken);
+        askToAIDto.setCandidateId(requestBody.getCandidateId());
+        askToAIDto.setCandidateSecret(requestBody.getCandidateSecret());
+
+        gameService.askToAI(askToAIDto);
+
+        AIAskDto aiAskDto = askToAIDto.getAiDto();
+
+        responseBody.setAskPrompt(aiAskDto.getAskPrompt());
+        responseBody.setResponse(aiAskDto.getResponse());
 
         return responseBody;
     }

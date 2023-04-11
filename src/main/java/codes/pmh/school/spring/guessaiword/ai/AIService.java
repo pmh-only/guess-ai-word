@@ -32,7 +32,7 @@ public class AIService {
         this.API_URL = new URL("https://api.openai.com/v1/chat/completions");
     }
 
-    private void askToAi (AIAskDto askDto) throws Exception {
+    public void askToAi (AIAskDto askDto) throws Exception {
         openAIConnection(askDto);
         prepareRequestHeader(askDto);
         prepareRequestBody(askDto);

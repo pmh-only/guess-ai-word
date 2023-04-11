@@ -8,7 +8,7 @@ public class GameAskCandidate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String candidateSecret;
+    private String secret;
 
     private String askPrompt;
 
@@ -23,12 +23,12 @@ public class GameAskCandidate {
         this.id = id;
     }
 
-    public String getCandidateSecret() {
-        return candidateSecret;
+    public String getSecret() {
+        return secret;
     }
 
-    public void setCandidateSecret(String candidateSecret) {
-        this.candidateSecret = candidateSecret;
+    public void setSecret(String secret) {
+        this.secret = secret;
     }
 
     public String getAskPrompt() {
