@@ -4,6 +4,7 @@ import codes.pmh.school.spring.guessaiword.ai.AIService;
 import codes.pmh.school.spring.guessaiword.ai.dto.AIAskDto;
 import codes.pmh.school.spring.guessaiword.dictionary.DictionaryServiceAskPromptImpl;
 import codes.pmh.school.spring.guessaiword.dictionary.DictionaryServiceWordImpl;
+import codes.pmh.school.spring.guessaiword.dictionary.dto.DictionaryFileContentDto;
 import codes.pmh.school.spring.guessaiword.dictionary.enums.DictionaryCategory;
 import codes.pmh.school.spring.guessaiword.game.dto.*;
 import codes.pmh.school.spring.guessaiword.game.entity.Game;
@@ -99,7 +100,7 @@ public class GameService {
 
     private void getRandomAnswerWord (GameRoundCreationDto roundCreationDto) {
         DictionaryCategory category = roundCreationDto.getGame().getDictionaryCategory();
-        String answerWord = wordDictionaryService.getRandom(category);
+        DictionaryFileContentDto answerWord = wordDictionaryService.getRandom(category);
 
         roundCreationDto.setAnswerWord(answerWord);
     }
@@ -107,14 +108,16 @@ public class GameService {
     private void createGameRoundEntity (GameRoundCreationDto roundCreationDto) {
         Game game = roundCreationDto.getGame();
         GameRound gameRound = new GameRound();
+        DictionaryFileContentDto answerWord = roundCreationDto.getAnswerWord();
 
         gameRound.setGame(game);
-        gameRound.setAnswer(roundCreationDto.getAnswerWord());
+        gameRound.setAnswer(answerWord.getContent());
+        gameRound.setAnswerCategory(answerWord.getCategory());
 
         gameRoundRepository.save(gameRound);
     }
 
-    public GameAskCandidateCreationDto createAskCandidate (GameAskCandidateCreationDto candidateCreationDto) throws Exception {
+    public void createAskCandidate (GameAskCandidateCreationDto candidateCreationDto) throws Exception {
         getGameIdByToken(candidateCreationDto);
         getGameById(candidateCreationDto);
         getGameRoundByGame(candidateCreationDto);
@@ -125,8 +128,6 @@ public class GameService {
         createAskCandidateList(candidateCreationDto);
         saveCandidateList(candidateCreationDto);
         saveAskedAt(candidateCreationDto);
-
-        return candidateCreationDto;
     }
 
     private boolean isAskCandidateCreatable (GameAskCandidateCreationDto candidateCreationDto) {
@@ -148,16 +149,16 @@ public class GameService {
     }
 
     private void createAskCandidateList (GameAskCandidateCreationDto candidateCreationDto) {
-        DictionaryCategory dictionaryCategory = candidateCreationDto.getGame().getDictionaryCategory();
+        DictionaryCategory dictionaryCategory = candidateCreationDto.getGameRound().getAnswerCategory();
         GameType gameType = candidateCreationDto.getGame().getGameType();
 
         List<GameAskCandidateDto> candidateList = candidateCreationDto.getCandidates();
 
         while (candidateList.size() < gameType.getCandidateCount()) {
-            String askPrompt = this.askPromptDictionaryService.getRandom(dictionaryCategory);
+            DictionaryFileContentDto askPrompt = this.askPromptDictionaryService.getRandom(dictionaryCategory);
             GameAskCandidateDto candidateDto = new GameAskCandidateDto();
 
-            candidateDto.setAskPrompt(askPrompt);
+            candidateDto.setAskPrompt(askPrompt.getContent());
             candidateList.add(candidateDto);
         }
 
@@ -198,6 +199,7 @@ public class GameService {
         getCandidateBySecretAndId(gameAskToAIDto);
 
         askToAIAsker(gameAskToAIDto);
+        maskAIResponse(gameAskToAIDto);
         saveCandidateToRecord(gameAskToAIDto);
         removeAllCandidate(gameAskToAIDto);
     }
@@ -206,11 +208,21 @@ public class GameService {
         AIAskDto aiAskDto = new AIAskDto();
         GameAskCandidate candidate = gameAskToAIDto.getCandidate();
 
-        aiAskDto.setAskPrompt(candidate.getAskPrompt());
+        String prompt = String.format(candidate.getAskPrompt(), candidate.getRound().getAnswer());
+
+        aiAskDto.setAskPrompt(prompt);
 
         aiService.askToAi(aiAskDto);
 
         gameAskToAIDto.setAiDto(aiAskDto);
+    }
+
+    private void maskAIResponse (GameAskToAIDto gameAskToAIDto) {
+        AIAskDto aiAskDto = gameAskToAIDto.getAiDto();
+        String response = aiAskDto.getResponse();
+        String answer = gameAskToAIDto.getGameRound().getAnswer();
+
+        aiAskDto.setResponse(response.replaceAll(answer, "%s"));
     }
 
     private void saveCandidateToRecord (GameAskToAIDto gameAskToAIDto) {

@@ -1,5 +1,6 @@
 package codes.pmh.school.spring.guessaiword.dictionary;
 
+import codes.pmh.school.spring.guessaiword.dictionary.dto.DictionaryFileContentDto;
 import codes.pmh.school.spring.guessaiword.dictionary.enums.DictionaryCategory;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class DictionaryServiceWordImpl implements DictionaryRandomable {
     }
 
     @Override
-    public String getRandom(DictionaryCategory category) {
+    public DictionaryFileContentDto getRandom(DictionaryCategory category) {
         return this.dictionaryService.getRandom(category);
     }
 }

@@ -1,5 +1,6 @@
 package codes.pmh.school.spring.guessaiword.game.entity;
 
+import codes.pmh.school.spring.guessaiword.dictionary.enums.DictionaryCategory;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -14,6 +15,8 @@ public class GameRound {
     private int id;
 
     private String answer;
+
+    private DictionaryCategory answerCategory;
 
     private boolean isCorrectAnswer = false;
 
@@ -44,6 +47,14 @@ public class GameRound {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public DictionaryCategory getAnswerCategory() {
+        return answerCategory;
+    }
+
+    public void setAnswerCategory(DictionaryCategory answerCategory) {
+        this.answerCategory = answerCategory;
     }
 
     public boolean isCorrectAnswer() {

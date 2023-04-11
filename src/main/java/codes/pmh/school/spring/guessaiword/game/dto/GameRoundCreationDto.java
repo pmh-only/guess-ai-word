@@ -1,5 +1,6 @@
 package codes.pmh.school.spring.guessaiword.game.dto;
 
+import codes.pmh.school.spring.guessaiword.dictionary.dto.DictionaryFileContentDto;
 import codes.pmh.school.spring.guessaiword.game.entity.Game;
 
 public class GameRoundCreationDto implements GameIdFetchableDto, GameFetchableDto {
@@ -7,7 +8,7 @@ public class GameRoundCreationDto implements GameIdFetchableDto, GameFetchableDt
 
     private int gameId;
 
-    private String answerWord;
+    private DictionaryFileContentDto answerWord;
 
     private String gameToken;
 
@@ -21,11 +22,11 @@ public class GameRoundCreationDto implements GameIdFetchableDto, GameFetchableDt
         this.game = game;
     }
 
-    public String getAnswerWord() {
+    public DictionaryFileContentDto getAnswerWord() {
         return answerWord;
     }
 
-    public void setAnswerWord(String answerWord) {
+    public void setAnswerWord(DictionaryFileContentDto answerWord) {
         this.answerWord = answerWord;
     }
 

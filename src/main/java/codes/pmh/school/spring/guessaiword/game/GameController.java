@@ -78,7 +78,6 @@ public class GameController {
 
         AIAskDto aiAskDto = askToAIDto.getAiDto();
 
-        responseBody.setAskPrompt(aiAskDto.getAskPrompt());
         responseBody.setResponse(aiAskDto.getResponse());
 
         return responseBody;

@@ -51,7 +51,7 @@ public class DictionaryServiceImpl implements DictionaryRandomable {
         return new String(dictionaryBytes, StandardCharsets.UTF_8);
     }
 
-    public String getRandom (DictionaryCategory category) {
+    public DictionaryFileContentDto getRandom (DictionaryCategory category) {
         List<DictionaryFileContentDto> filteredDictionary = this.dictionary;
 
         if (category != DictionaryCategory.ANY)
@@ -62,6 +62,6 @@ public class DictionaryServiceImpl implements DictionaryRandomable {
 
         Collections.shuffle(filteredDictionary);
 
-        return filteredDictionary.get(0).getContent();
+        return filteredDictionary.get(0);
     }
 }
