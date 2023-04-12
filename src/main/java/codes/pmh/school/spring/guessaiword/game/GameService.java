@@ -244,6 +244,51 @@ public class GameService {
         askCandidateRepository.deleteBySecret(candidateSecret);
     }
 
+    public void submitGameAnswer (GameSubmitAnswerDto submitAnswerDto) throws Exception {
+        getGameIdByToken(submitAnswerDto);
+        getGameById(submitAnswerDto);
+        getGameRoundByGame(submitAnswerDto);
+
+        if (!isAnswerSubmittable(submitAnswerDto))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
+        getIsCorrectAnswer(submitAnswerDto);
+        saveSubmitAnswer(submitAnswerDto);
+    }
+
+    private boolean isAnswerSubmittable (GameSubmitAnswerDto submitAnswerDto) {
+        Game game = submitAnswerDto.getGame();
+        GameRound gameRound = submitAnswerDto.getGameRound();
+        Date lastSubmittedAt = gameRound.getLastSubmittedAt();
+
+        if (lastSubmittedAt == null)
+            return true;
+
+        if (gameRound.isCorrectAnswer())
+            return false;
+
+        Duration throttleSecond = Duration.ofSeconds(game.getGameType().getAnswerSubmitThrottleSecond());
+        Instant throttleExpireAt = lastSubmittedAt.toInstant().plus(throttleSecond);
+
+        return throttleExpireAt.isBefore(new Date().toInstant());
+    }
+
+    private void saveSubmitAnswer (GameSubmitAnswerDto submitAnswerDto) {
+        GameRound gameRound = submitAnswerDto.getGameRound();
+
+        gameRound.setLastSubmittedAt(new Date());
+        gameRound.setCorrectAnswer(submitAnswerDto.isCorrect());
+
+        gameRoundRepository.save(gameRound);
+    }
+
+    private void getIsCorrectAnswer (GameSubmitAnswerDto submitAnswerDto) {
+        GameRound gameRound = submitAnswerDto.getGameRound();
+        boolean isCorrectAnswer = gameRound.getAnswer().equals(submitAnswerDto.getAnswer());
+
+        submitAnswerDto.setCorrect(isCorrectAnswer);
+    }
+
     public void updatePlayerName (GameUpdatePlayerNameDto updatePlayerNameDto) throws Exception {
         getGameIdByToken(updatePlayerNameDto);
         getGameById(updatePlayerNameDto);

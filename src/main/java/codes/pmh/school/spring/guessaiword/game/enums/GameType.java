@@ -34,4 +34,8 @@ public enum GameType {
     public int getAskThrottleSecond() {
         return 5;
     }
+
+    public int getAnswerSubmitThrottleSecond() {
+        return 5;
+    }
 }

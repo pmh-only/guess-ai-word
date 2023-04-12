@@ -83,6 +83,22 @@ public class GameController {
         return responseBody;
     }
 
+    @PostMapping("/submitAnswer")
+    public GameSubmitAnswerResponseBody submitAnswer (
+            @CookieValue("GAME_TOKEN") String gameToken,
+            @RequestBody @Valid GameSubmitAnswerRequestBody requestBody)
+            throws Exception {
+
+        GameSubmitAnswerDto submitAnswerDto = new GameSubmitAnswerDto();
+        GameSubmitAnswerResponseBody responseBody = new GameSubmitAnswerResponseBody();
+
+        submitAnswerDto.setGameToken(gameToken);
+        gameService.submitGameAnswer(submitAnswerDto);
+        responseBody.setCorrectAnswer(submitAnswerDto.isCorrect());
+
+        return responseBody;
+    }
+
     @PostMapping("/updatePlayerName")
     public void updatePlayerName (
             @CookieValue("GAME_TOKEN") String gameToken,
