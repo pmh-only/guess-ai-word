@@ -24,6 +24,10 @@ public class AIService {
     @Value("${guessaiword.ai.model:gpt-3.5-turbo}")
     private String API_MODEL;
 
+    private int API_MAX_TOKEN = 100;
+
+    private String PROMPT_SURFIX = " 30자 이내로 짧게 요약해주세요.";
+
     private ObjectMapper objectMapper = new ObjectMapper();
 
     private URL API_URL;
@@ -64,11 +68,12 @@ public class AIService {
         ObjectNode messageNode = objectMapper.createObjectNode();
 
         messageNode.put("role", "user");
-        messageNode.put("content", askDto.getAskPrompt());
+        messageNode.put("content", askDto.getAskPrompt() + this.PROMPT_SURFIX);
         messagesNode.add(messageNode);
 
         requestBodyNode.put("model", this.API_MODEL);
-        requestBodyNode.put("messages", messagesNode);
+        requestBodyNode.put("max_tokens", this.API_MAX_TOKEN);
+        requestBodyNode.set("messages", messagesNode);
 
         askDto.setRequestBodyNode(requestBodyNode);
     }

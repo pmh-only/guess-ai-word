@@ -281,7 +281,7 @@
   },
   {
     "category": "TOOLS",
-    "content": "전기 드릴"
+    "content": "드릴"
   },
   {
     "category": "TOOLS",
@@ -301,23 +301,11 @@
   },
   {
     "category": "TOOLS",
-    "content": "모래지게"
-  },
-  {
-    "category": "TOOLS",
-    "content": "커팅칼"
-  },
-  {
-    "category": "TOOLS",
     "content": "실"
   },
   {
     "category": "TOOLS",
     "content": "바늘뜨기"
-  },
-  {
-    "category": "TOOLS",
-    "content": "미니 드라이버"
   },
   {
     "category": "TOOLS",
@@ -338,18 +326,6 @@
   {
     "category": "TOOLS",
     "content": "손전등"
-  },
-  {
-    "category": "TOOLS",
-    "content": "미니팬치"
-  },
-  {
-    "category": "TOOLS",
-    "content": "이젤"
-  },
-  {
-    "category": "TOOLS",
-    "content": "스크류드라이버"
   },
   {
     "category": "TOOLS",
@@ -377,31 +353,11 @@
   },
   {
     "category": "TOOLS",
-    "content": "유리막대기"
-  },
-  {
-    "category": "TOOLS",
-    "content": "측정테이프"
-  },
-  {
-    "category": "TOOLS",
-    "content": "케이블 커터"
-  },
-  {
-    "category": "TOOLS",
-    "content": "와이어 스트리퍼"
-  },
-  {
-    "category": "TOOLS",
     "content": "핀셋"
   },
   {
     "category": "TOOLS",
     "content": "젖병"
-  },
-  {
-    "category": "TOOLS",
-    "content": "마스킹 테이프"
   },
   {
     "category": "TOOLS",
