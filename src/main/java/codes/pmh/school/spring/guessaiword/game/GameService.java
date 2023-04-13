@@ -289,6 +289,53 @@ public class GameService {
         submitAnswerDto.setCorrect(isCorrectAnswer);
     }
 
+    public void calculateScore (GameCalculateScoreDto calculateScoreDto) throws Exception {
+        getGameIdByToken(calculateScoreDto);
+        getGameById(calculateScoreDto);
+
+        calculateRoundsScore(calculateScoreDto);
+        saveGameScore(calculateScoreDto);
+    }
+
+    public void calculateRoundsScore (GameCalculateScoreDto calculateScoreDto) {
+        List<GameRound> rounds = calculateScoreDto.getGame().getRounds();
+        int roundsScore = 0;
+
+        for (GameRound round : rounds)
+            roundsScore += calculateRoundScore(round);
+
+        calculateScoreDto.setGameScore(roundsScore);
+    }
+
+    public int calculateRoundScore (GameRound round) {
+        if (!round.isCorrectAnswer()) // 오답시 0점
+            return 0;
+
+        int roundScore = 1000; // 정답시 기본점수 1000점
+
+        long startsAt = round.getStartedAt().getTime();
+        long endsAt = round.getLastSubmittedAt().getTime();
+
+        long diffSeconds = (endsAt - startsAt) / 1000;
+
+        roundScore -= diffSeconds * 5; // 푸는데 걸린 초 당 5점 감점
+        roundScore -= round.getAsks().size() * 30; // 힌트 사용시 30점 감점
+
+        if (roundScore < 0) // 음수 스코어는 0점 처리
+            roundScore = 0;
+
+        return  roundScore;
+    }
+
+    public void saveGameScore (GameCalculateScoreDto calculateScoreDto) {
+        Game game = calculateScoreDto.getGame();
+
+        game.setFinished(true);
+        game.setFinalScore(calculateScoreDto.getGameScore());
+
+        gameRepository.save(game);
+    }
+
     public void updatePlayerName (GameUpdatePlayerNameDto updatePlayerNameDto) throws Exception {
         getGameIdByToken(updatePlayerNameDto);
         getGameById(updatePlayerNameDto);

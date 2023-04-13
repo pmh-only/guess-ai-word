@@ -93,8 +93,25 @@ public class GameController {
         GameSubmitAnswerResponseBody responseBody = new GameSubmitAnswerResponseBody();
 
         submitAnswerDto.setGameToken(gameToken);
+        submitAnswerDto.setAnswer(requestBody.getAnswer());
+
         gameService.submitGameAnswer(submitAnswerDto);
         responseBody.setCorrectAnswer(submitAnswerDto.isCorrect());
+
+        return responseBody;
+    }
+
+    @PostMapping("/calculateScore")
+    public GameCalculateScoreResponseBody calculateScore (
+            @CookieValue("GAME_TOKEN") String gameToken)
+            throws Exception {
+
+        GameCalculateScoreDto calculateScoreDto = new GameCalculateScoreDto();
+        GameCalculateScoreResponseBody responseBody = new GameCalculateScoreResponseBody();
+
+        calculateScoreDto.setGameToken(gameToken);
+        gameService.calculateScore(calculateScoreDto);
+        responseBody.setScore(calculateScoreDto.getGameScore());
 
         return responseBody;
     }
