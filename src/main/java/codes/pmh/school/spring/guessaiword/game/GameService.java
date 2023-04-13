@@ -198,10 +198,20 @@ public class GameService {
         getGameRoundByGame(gameAskToAIDto);
         getCandidateBySecretAndId(gameAskToAIDto);
 
+        if (!isAskerable(gameAskToAIDto))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
         askToAIAsker(gameAskToAIDto);
         maskAIResponse(gameAskToAIDto);
         saveCandidateToRecord(gameAskToAIDto);
         removeAllCandidate(gameAskToAIDto);
+    }
+
+    private boolean isAskerable (GameAskToAIDto gameAskToAIDto) {
+        long candidateRoundId = gameAskToAIDto.getCandidate().getRound().getId();
+        long gameTokenRoundId = gameAskToAIDto.getGameRound().getId();
+
+        return candidateRoundId == gameTokenRoundId;
     }
 
     private void askToAIAsker (GameAskToAIDto gameAskToAIDto) throws Exception {
