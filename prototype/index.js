@@ -99,6 +99,9 @@ const gameTypeValues = {
       })
 
       let askCount = 0
+      let askedAt
+      let submitAt
+
       while (true) {
         const { menu3 } = await prompts({
           type: 'select',
@@ -115,6 +118,11 @@ const gameTypeValues = {
           break
   
         if (menu3 === 1) {
+          if (askedAt !== undefined && (Date.now() - askedAt) / 1000 <= gameTypeValues[gameType].askThrottle) {
+            console.log(chalk.red('질문은 5초마다 한번씩 할 수 있습니다'))
+            continue
+          }
+
           const { candidates, candidateSecret } = await fetch(`${host}/games/createAskCandidate`, {
             method: 'POST',
             headers: { 'Cookie': `GAME_TOKEN=${gameToken}` }
@@ -122,6 +130,8 @@ const gameTypeValues = {
 
           console.log(chalk.gray(`CandidateSecret: ${candidateSecret}`))
 
+          askedAt = Date.now()
+          
           const { candidateId } = await prompts({
             type: 'select',
             name: 'candidateId',
@@ -154,6 +164,11 @@ const gameTypeValues = {
         }
 
         if (menu3 === 2) {
+          if (submitAt !== undefined && (Date.now() - submitAt) / 1000 <= gameTypeValues[gameType].submitThrottle) {
+            console.log(chalk.red('정답 제출은 5초마다 한번씩 할 수 있습니다'))
+            continue
+          }
+
           const { answer } = await prompts({
             type: 'text',
             name: 'answer',
@@ -167,6 +182,8 @@ const gameTypeValues = {
               answer
             })
           }).then((res) => res.json())
+
+          submitAt = Date.now()
 
           if (correctAnswer) {
             console.log(chalk.greenBright('정답입니다!!'))
