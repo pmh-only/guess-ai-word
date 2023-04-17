@@ -193,6 +193,13 @@ const gameTypeValues = {
           console.log(chalk.red('아닙니다...'))
         }
       }
+      
+      const { correctAnswer } = await fetch(`${host}/games/getCorrectAnswer`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Cookie': `GAME_TOKEN=${gameToken}` }
+      }).then((res) => res.json())
+
+      console.log(chalk.greenBright(`정답은 ${correctAnswer}(이)였습니다!`))
     }
 
     const { score } = await fetch(`${host}/games/calculateScore`, {
