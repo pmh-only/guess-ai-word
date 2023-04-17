@@ -1,7 +1,7 @@
 package codes.pmh.school.spring.guessaiword.game.dto;
 
-import codes.pmh.school.spring.guessaiword.game.entity.Game;
-import codes.pmh.school.spring.guessaiword.game.entity.GameRound;
+import codes.pmh.school.spring.guessaiword.common.entity.Game;
+import codes.pmh.school.spring.guessaiword.common.entity.GameRound;
 
 import java.util.ArrayList;
 import java.util.List;

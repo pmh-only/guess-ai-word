@@ -1,7 +1,7 @@
 package codes.pmh.school.spring.guessaiword.game.dto;
 
 import codes.pmh.school.spring.guessaiword.dictionary.dto.DictionaryFileContentDto;
-import codes.pmh.school.spring.guessaiword.game.entity.Game;
+import codes.pmh.school.spring.guessaiword.common.entity.Game;
 
 public class GameRoundCreationDto implements GameIdFetchableDto, GameFetchableDto {
     private Game game;

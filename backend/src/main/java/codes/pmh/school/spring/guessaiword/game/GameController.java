@@ -101,6 +101,22 @@ public class GameController {
         return responseBody;
     }
 
+    @PostMapping("/getCorrectAnswer")
+    public GameGetCorrectAnswerResponseBody getCorrectAnswer (
+            @CookieValue("GAME_TOKEN") String gameToken)
+            throws Exception {
+
+        GameGetCorrectAnswerResponseBody responseBody = new GameGetCorrectAnswerResponseBody();
+        GameGetCorrectAnswerDto correctAnswerDto = new GameGetCorrectAnswerDto();
+
+        correctAnswerDto.setGameToken(gameToken);
+        gameService.getCorrectAnswer(correctAnswerDto);
+
+        responseBody.setCorrectAnswer(correctAnswerDto.getCorrectAnswer());
+
+        return responseBody;
+    }
+
     @PostMapping("/calculateScore")
     public GameCalculateScoreResponseBody calculateScore (
             @CookieValue("GAME_TOKEN") String gameToken)

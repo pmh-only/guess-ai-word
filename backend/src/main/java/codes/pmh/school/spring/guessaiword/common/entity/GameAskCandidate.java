@@ -1,16 +1,16 @@
-package codes.pmh.school.spring.guessaiword.game.entity;
+package codes.pmh.school.spring.guessaiword.common.entity;
 
 import jakarta.persistence.*;
 
 @Entity
-public class GameAskRecord {
+public class GameAskCandidate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String askPrompt;
+    private String secret;
 
-    private String response;
+    private String askPrompt;
 
     @ManyToOne
     private GameRound round;
@@ -23,20 +23,20 @@ public class GameAskRecord {
         this.id = id;
     }
 
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
+
     public String getAskPrompt() {
         return askPrompt;
     }
 
     public void setAskPrompt(String askPrompt) {
         this.askPrompt = askPrompt;
-    }
-
-    public String getResponse() {
-        return response;
-    }
-
-    public void setResponse(String response) {
-        this.response = response;
     }
 
     public GameRound getRound() {

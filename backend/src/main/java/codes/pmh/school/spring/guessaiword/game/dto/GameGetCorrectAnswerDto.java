@@ -3,7 +3,7 @@ package codes.pmh.school.spring.guessaiword.game.dto;
 import codes.pmh.school.spring.guessaiword.common.entity.Game;
 import codes.pmh.school.spring.guessaiword.common.entity.GameRound;
 
-public class GameSubmitAnswerDto implements GameIdFetchableDto, GameFetchableDto, GameRoundFetchableDto {
+public class GameGetCorrectAnswerDto implements GameIdFetchableDto, GameFetchableDto, GameRoundFetchableDto {
     private String gameToken;
 
     private int gameId;
@@ -12,9 +12,7 @@ public class GameSubmitAnswerDto implements GameIdFetchableDto, GameFetchableDto
 
     private GameRound gameRound;
 
-    private String answer;
-
-    private boolean isCorrect;
+    private String correctAnswer;
 
     @Override
     public String getGameToken() {
@@ -56,19 +54,11 @@ public class GameSubmitAnswerDto implements GameIdFetchableDto, GameFetchableDto
         this.gameRound = gameRound;
     }
 
-    public String getAnswer() {
-        return answer;
+    public String getCorrectAnswer() {
+        return correctAnswer;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-
-    public boolean isCorrect() {
-        return isCorrect;
-    }
-
-    public void setCorrect(boolean correct) {
-        isCorrect = correct;
+    public void setCorrectAnswer(String correctAnswer) {
+        this.correctAnswer = correctAnswer;
     }
 }

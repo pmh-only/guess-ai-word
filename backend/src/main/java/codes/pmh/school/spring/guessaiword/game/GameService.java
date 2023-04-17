@@ -7,15 +7,15 @@ import codes.pmh.school.spring.guessaiword.dictionary.DictionaryServiceWordImpl;
 import codes.pmh.school.spring.guessaiword.dictionary.dto.DictionaryFileContentDto;
 import codes.pmh.school.spring.guessaiword.dictionary.enums.DictionaryCategory;
 import codes.pmh.school.spring.guessaiword.game.dto.*;
-import codes.pmh.school.spring.guessaiword.game.entity.Game;
-import codes.pmh.school.spring.guessaiword.game.entity.GameAskCandidate;
-import codes.pmh.school.spring.guessaiword.game.entity.GameAskRecord;
-import codes.pmh.school.spring.guessaiword.game.entity.GameRound;
+import codes.pmh.school.spring.guessaiword.common.entity.Game;
+import codes.pmh.school.spring.guessaiword.common.entity.GameAskCandidate;
+import codes.pmh.school.spring.guessaiword.common.entity.GameAskRecord;
+import codes.pmh.school.spring.guessaiword.common.entity.GameRound;
 import codes.pmh.school.spring.guessaiword.game.enums.GameType;
-import codes.pmh.school.spring.guessaiword.game.repository.GameAskCandidateRepository;
-import codes.pmh.school.spring.guessaiword.game.repository.GameAskRecordRepository;
-import codes.pmh.school.spring.guessaiword.game.repository.GameRepository;
-import codes.pmh.school.spring.guessaiword.game.repository.GameRoundRepository;
+import codes.pmh.school.spring.guessaiword.common.repository.GameAskCandidateRepository;
+import codes.pmh.school.spring.guessaiword.common.repository.GameAskRecordRepository;
+import codes.pmh.school.spring.guessaiword.common.repository.GameRepository;
+import codes.pmh.school.spring.guessaiword.common.repository.GameRoundRepository;
 import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -208,10 +208,12 @@ public class GameService {
     }
 
     private boolean isAskerable (GameAskToAIDto gameAskToAIDto) {
-        long candidateRoundId = gameAskToAIDto.getCandidate().getRound().getId();
-        long gameTokenRoundId = gameAskToAIDto.getGameRound().getId();
+        GameRound gameRound = gameAskToAIDto.getGameRound();
 
-        return candidateRoundId == gameTokenRoundId;
+        long candidateRoundId = gameAskToAIDto.getCandidate().getRound().getId();
+        long gameTokenRoundId = gameRound.getId();
+
+        return candidateRoundId == gameTokenRoundId && !gameRound.isCorrectAnswerShowed();
     }
 
     private void askToAIAsker (GameAskToAIDto gameAskToAIDto) throws Exception {
@@ -277,6 +279,9 @@ public class GameService {
         if (gameRound.isCorrectAnswer())
             return false;
 
+        if (gameRound.isCorrectAnswerShowed())
+            return false;
+
         Duration throttleSecond = Duration.ofSeconds(game.getGameType().getAnswerSubmitThrottleSecond());
         Instant throttleExpireAt = lastSubmittedAt.toInstant().plus(throttleSecond);
 
@@ -297,6 +302,27 @@ public class GameService {
         boolean isCorrectAnswer = gameRound.getAnswer().equals(submitAnswerDto.getAnswer());
 
         submitAnswerDto.setCorrect(isCorrectAnswer);
+    }
+
+    public void getCorrectAnswer (GameGetCorrectAnswerDto getCorrectAnswerDto) throws Exception {
+        getGameIdByToken(getCorrectAnswerDto);
+        getGameById(getCorrectAnswerDto);
+        getGameRoundByGame(getCorrectAnswerDto);
+
+        getCorrectAnswerString(getCorrectAnswerDto);
+        saveCorrectAnswerShowed(getCorrectAnswerDto);
+    }
+
+    private void getCorrectAnswerString (GameGetCorrectAnswerDto getCorrectAnswerDto) {
+        GameRound gameRound = getCorrectAnswerDto.getGameRound();
+        getCorrectAnswerDto.setCorrectAnswer(gameRound.getAnswer());
+    }
+
+    private void saveCorrectAnswerShowed (GameGetCorrectAnswerDto getCorrectAnswerDto) {
+        GameRound gameRound = getCorrectAnswerDto.getGameRound();
+        gameRound.setCorrectAnswerShowed(true);
+
+        gameRoundRepository.save(gameRound);
     }
 
     public void calculateScore (GameCalculateScoreDto calculateScoreDto) throws Exception {

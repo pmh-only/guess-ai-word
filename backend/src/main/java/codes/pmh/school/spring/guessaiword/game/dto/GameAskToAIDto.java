@@ -1,9 +1,9 @@
 package codes.pmh.school.spring.guessaiword.game.dto;
 
 import codes.pmh.school.spring.guessaiword.ai.dto.AIAskDto;
-import codes.pmh.school.spring.guessaiword.game.entity.Game;
-import codes.pmh.school.spring.guessaiword.game.entity.GameAskCandidate;
-import codes.pmh.school.spring.guessaiword.game.entity.GameRound;
+import codes.pmh.school.spring.guessaiword.common.entity.Game;
+import codes.pmh.school.spring.guessaiword.common.entity.GameAskCandidate;
+import codes.pmh.school.spring.guessaiword.common.entity.GameRound;
 
 public class GameAskToAIDto implements GameIdFetchableDto, GameFetchableDto, GameRoundFetchableDto, GameAskCandidateFetchableDto {
     private String gameToken;

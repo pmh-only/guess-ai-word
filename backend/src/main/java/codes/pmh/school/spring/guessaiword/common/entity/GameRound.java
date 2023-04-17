@@ -1,4 +1,4 @@
-package codes.pmh.school.spring.guessaiword.game.entity;
+package codes.pmh.school.spring.guessaiword.common.entity;
 
 import codes.pmh.school.spring.guessaiword.dictionary.enums.DictionaryCategory;
 import jakarta.persistence.*;
@@ -19,6 +19,8 @@ public class GameRound {
     private DictionaryCategory answerCategory;
 
     private boolean isCorrectAnswer = false;
+
+    private boolean isCorrectAnswerShowed = false;
 
     private Date lastAskedAt;
 
@@ -63,6 +65,14 @@ public class GameRound {
 
     public void setCorrectAnswer(boolean correctAnswer) {
         isCorrectAnswer = correctAnswer;
+    }
+
+    public boolean isCorrectAnswerShowed() {
+        return isCorrectAnswerShowed;
+    }
+
+    public void setCorrectAnswerShowed(boolean correctAnswerShowed) {
+        isCorrectAnswerShowed = correctAnswerShowed;
     }
 
     public Date getLastAskedAt() {
