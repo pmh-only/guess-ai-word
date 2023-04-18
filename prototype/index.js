@@ -109,7 +109,8 @@ const gameTypeValues = {
           message: '메뉴 선택',
           choices: [
             { title: '정답 제출', value: 2 },
-            { title: '질문하기', value: 1, disabled: askCount === gameTypeValues[gameType].askable },
+            { title: '질문하기 (-30점)', value: 1, disabled: askCount === gameTypeValues[gameType].askable },
+            { title: '초성 힌트 보기 (점수 반토막)', value: 4 },
             { title: '이번 라운드 건너뛰기', value: 3 }
           ]
         })
@@ -162,6 +163,15 @@ const gameTypeValues = {
 
           console.log(chalk.cyan('AI 응답: ') + response)
         }
+
+        if (menu3 === 4) {
+          const { chosungs } = await fetch(`${host}/games/getChosungHint`, {
+            method: 'POST',
+            headers: { 'Cookie': `GAME_TOKEN=${gameToken}` }
+	  }).then((res) => res.json())
+
+          console.log(chalk.cyan('초성 힌트: ') + chosungs)
+	}
 
         if (menu3 === 2) {
           if (submitAt !== undefined && (Date.now() - submitAt) / 1000 <= gameTypeValues[gameType].submitThrottle) {
