@@ -22,6 +22,8 @@ public class GameRound {
 
     private boolean isCorrectAnswerShowed = false;
 
+    private boolean isChosungHintShowed = false;
+
     private Date lastAskedAt;
 
     private Date lastSubmittedAt;
@@ -73,6 +75,14 @@ public class GameRound {
 
     public void setCorrectAnswerShowed(boolean correctAnswerShowed) {
         isCorrectAnswerShowed = correctAnswerShowed;
+    }
+
+    public boolean isChosungHintShowed() {
+        return isChosungHintShowed;
+    }
+
+    public void setChosungHintShowed(boolean chosungHintShowed) {
+        isChosungHintShowed = chosungHintShowed;
     }
 
     public Date getLastAskedAt() {

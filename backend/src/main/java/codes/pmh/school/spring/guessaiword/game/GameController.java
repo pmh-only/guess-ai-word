@@ -44,6 +44,22 @@ public class GameController {
         gameService.createGameRound(roundCreationDto);
     }
 
+    @PostMapping("/getChosungHint")
+    public GameGetChosungHintResponseBody getGameRoundChosungHint (
+            @CookieValue("GAME_TOKEN") String gameToken)
+            throws Exception {
+
+        GameGetChosungHintDto getChosungHintDto = new GameGetChosungHintDto();
+        GameGetChosungHintResponseBody getChosungHintResponseBody = new GameGetChosungHintResponseBody();
+
+        getChosungHintDto.setGameToken(gameToken);
+
+        gameService.getChosungHint(getChosungHintDto);
+        getChosungHintResponseBody.setChosungs(getChosungHintDto.getChosungs());
+
+        return getChosungHintResponseBody;
+    }
+
     @PostMapping("/createAskCandidate")
     public GameAskCandidateCreationResponseBody createGameAskPromptCandidate (
             @CookieValue("GAME_TOKEN") String gameToken)

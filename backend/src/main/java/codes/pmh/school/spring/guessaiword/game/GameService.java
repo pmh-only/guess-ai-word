@@ -24,9 +24,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service("gameService")
 public class GameService {
@@ -153,7 +155,8 @@ public class GameService {
         GameType gameType = candidateCreationDto.getGame().getGameType();
 
         List<GameAskCandidateDto> candidateList = candidateCreationDto.getCandidates();
-        List<DictionaryFileContentDto> askPrompts = this.askPromptDictionaryService.getRandoms(dictionaryCategory, gameType.getCandidateCount());
+        List<DictionaryFileContentDto> askPrompts =
+                this.askPromptDictionaryService.getRandoms(dictionaryCategory, gameType.getCandidateCount());
 
         for (DictionaryFileContentDto askPrompt : askPrompts) {
             GameAskCandidateDto candidateDto = new GameAskCandidateDto();
@@ -357,6 +360,9 @@ public class GameService {
         roundScore -= diffSeconds * 5; // 푸는데 걸린 초 당 5점 감점
         roundScore -= round.getAsks().size() * 30; // 힌트 사용시 30점 감점
 
+        if (round.isChosungHintShowed())
+            roundScore /= 2; // 초성 힌트 사용시 50%
+
         if (roundScore < 0) // 음수 스코어는 0점 처리
             roundScore = 0;
 
@@ -394,6 +400,37 @@ public class GameService {
         game.setPlayerName(updatePlayerNameDto.getPlayerName());
 
         gameRepository.save(game);
+    }
+
+    public void getChosungHint (GameGetChosungHintDto getChosungHintDto) throws Exception {
+        getGameIdByToken(getChosungHintDto);
+        getGameById(getChosungHintDto);
+        getGameRoundByGame(getChosungHintDto);
+
+        calculateChosungs(getChosungHintDto);
+        saveChosungHintShowed(getChosungHintDto);
+    }
+
+    private void calculateChosungs (GameGetChosungHintDto getChosungHintDto) {
+        GameRound gameRound = getChosungHintDto.getGameRound();
+        String answer = gameRound.getAnswer();
+        String chosungs = answer
+                .chars()
+                .mapToObj(v -> calculateChosung(v))
+                .collect(Collectors.joining(""));
+
+        getChosungHintDto.setChosungs(chosungs);
+    }
+
+    private String calculateChosung (int origin) {
+        return new String(new int[]{0x1100 + (origin - 0xAC00) / 28 / 21}, 0, 1);
+    }
+
+    private void saveChosungHintShowed (GameGetChosungHintDto getChosungHintDto) {
+        GameRound gameRound = getChosungHintDto.getGameRound();
+
+        gameRound.setChosungHintShowed(true);
+        gameRoundRepository.save(gameRound);
     }
 
 //    -- Utils --
