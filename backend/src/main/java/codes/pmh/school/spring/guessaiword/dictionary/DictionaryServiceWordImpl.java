@@ -5,6 +5,7 @@ import codes.pmh.school.spring.guessaiword.dictionary.enums.DictionaryCategory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service("wordDictionary")
 public class DictionaryServiceWordImpl implements DictionaryRandomable {
@@ -17,7 +18,12 @@ public class DictionaryServiceWordImpl implements DictionaryRandomable {
     }
 
     @Override
+    public List<DictionaryFileContentDto> getRandoms(DictionaryCategory category, int count) {
+        return dictionaryService.getRandoms(category, count);
+    }
+
+    @Override
     public DictionaryFileContentDto getRandom(DictionaryCategory category) {
-        return this.dictionaryService.getRandom(category);
+        return dictionaryService.getRandom(category);
     }
 }

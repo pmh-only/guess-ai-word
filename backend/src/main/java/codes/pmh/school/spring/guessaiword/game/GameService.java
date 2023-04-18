@@ -100,7 +100,7 @@ public class GameService {
 
     private void getRandomAnswerWord (GameRoundCreationDto roundCreationDto) {
         DictionaryCategory category = roundCreationDto.getGame().getDictionaryCategory();
-        DictionaryFileContentDto answerWord = wordDictionaryService.getRandom(category);
+        DictionaryFileContentDto answerWord = wordDictionaryService.getRandoms(category, 1).get(0);
 
         roundCreationDto.setAnswerWord(answerWord);
     }
@@ -153,9 +153,9 @@ public class GameService {
         GameType gameType = candidateCreationDto.getGame().getGameType();
 
         List<GameAskCandidateDto> candidateList = candidateCreationDto.getCandidates();
+        List<DictionaryFileContentDto> askPrompts = this.askPromptDictionaryService.getRandoms(dictionaryCategory, gameType.getCandidateCount());
 
-        while (candidateList.size() < gameType.getCandidateCount()) {
-            DictionaryFileContentDto askPrompt = this.askPromptDictionaryService.getRandom(dictionaryCategory);
+        for (DictionaryFileContentDto askPrompt : askPrompts) {
             GameAskCandidateDto candidateDto = new GameAskCandidateDto();
 
             candidateDto.setAskPrompt(askPrompt.getContent());
