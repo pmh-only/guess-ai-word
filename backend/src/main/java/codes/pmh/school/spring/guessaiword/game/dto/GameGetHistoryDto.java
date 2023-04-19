@@ -1,6 +1,7 @@
 package codes.pmh.school.spring.guessaiword.game.dto;
 
 import codes.pmh.school.spring.guessaiword.common.entity.Game;
+import codes.pmh.school.spring.guessaiword.game.enums.GameType;
 
 import java.util.List;
 

@@ -3,7 +3,6 @@ package codes.pmh.school.spring.guessaiword.game;
 import codes.pmh.school.spring.guessaiword.ai.dto.AIAskDto;
 import codes.pmh.school.spring.guessaiword.game.dto.*;
 import codes.pmh.school.spring.guessaiword.game.model.*;
-import codes.pmh.school.spring.guessaiword.game.GameService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -176,6 +175,20 @@ public class GameController {
 
         responseBody.setGames(getHistoryDto.getGames());
         responseBody.setLast(getHistoryDto.isLast());
+
+        return responseBody;
+    }
+
+    @PostMapping("/getLeaderBoard")
+    public GameGetLeaderBoardResponseBody getLeaderBoard (
+            @RequestBody @Valid GameGetLeaderBoardRequestBody requestBody) {
+
+        GameGetLeaderBoardDto getLeaderBoardDto = new GameGetLeaderBoardDto();
+        GameGetLeaderBoardResponseBody responseBody = new GameGetLeaderBoardResponseBody();
+
+        getLeaderBoardDto.setGameType(requestBody.getGameType());
+        gameService.getGameScoreBoard(getLeaderBoardDto);
+        responseBody.setGames(getLeaderBoardDto.getGames());
 
         return responseBody;
     }

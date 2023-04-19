@@ -16,16 +16,15 @@ import codes.pmh.school.spring.guessaiword.common.repository.GameAskCandidateRep
 import codes.pmh.school.spring.guessaiword.common.repository.GameAskRecordRepository;
 import codes.pmh.school.spring.guessaiword.common.repository.GameRepository;
 import codes.pmh.school.spring.guessaiword.common.repository.GameRoundRepository;
+import codes.pmh.school.spring.guessaiword.game.model.GameGetLeaderBoardRequestBody;
 import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -439,11 +438,19 @@ public class GameService {
         int count = getHistoryDto.getCount();
 
         List<Game> games = lastId == 0
-                ? gameRepository.findByCount(count + 1)
-                : gameRepository.findByLastIdAndCount(lastId, count + 1);
+                ? gameRepository.findNGames(count + 1)
+                : gameRepository.findNGamesByLastId(lastId, count + 1);
 
         getHistoryDto.setGames(games.subList(0, Math.min(games.size(), count)));
         getHistoryDto.setLast(games.size() <= count);
+    }
+
+    public void getGameScoreBoard (GameGetLeaderBoardDto getLeaderBoardDto) {
+        GameType gameType = getLeaderBoardDto.getGameType();
+        List<Game> games =
+                gameRepository.findScoreTopNGamesByGameType(gameType, 10);
+
+        getLeaderBoardDto.setGames(games);
     }
 
 //    -- Utils --
