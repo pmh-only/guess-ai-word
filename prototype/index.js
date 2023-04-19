@@ -40,6 +40,7 @@ const gameTypeValues = {
       choices: [
         { title: '게임 시작', value: 1 },
         { title: '게임 기록', value: 3 },
+        { title: '게임 리더보드', value: 4 },
         { title: '종료', value: 2 }
       ]
     })
@@ -275,6 +276,43 @@ const gameTypeValues = {
 
         if (menu2 === 2)
           lastId = 0
+      }
+    }
+
+    if (menu1 === 4) {
+      const { gameType } = await prompts({
+        type: 'select',
+        name: 'gameType',
+        message: '게임타입 선택',
+        choices: [
+          { title: '노말', value: 'NORMAL' },
+          { title: '스피드런', value: 'SPEEDRUN' }
+        ]
+      })
+
+      while (true) {
+        const { games } = await fetch(`${host}/games/getLeaderBoard`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            gameType
+          })
+        }).then((res) => res.json())
+    
+        console.log(cj(games))
+  
+        const { menu2 } = await prompts({
+          type: 'select',
+          name: 'menu2',
+          message: '메뉴 선택',
+          choices: [
+            { title: '새로고침', value: 1 },
+            { title: '돌아가기', value: 2 }
+          ]
+        })
+
+        if (menu2 === 2)
+          break
       }
     }
   }
