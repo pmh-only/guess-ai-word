@@ -1,0 +1,44 @@
+.main {
+  width: 100%;
+  height: calc(100% - 50px);
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.bottomTab {
+  display: flex;
+  justify-content: stretch;
+  width: 100%;
+  position: relative;
+  background-color: var(--main-bg);
+  
+  > button {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--main-text);
+    background-color: var(--main-secondary);
+    cursor: pointer;
+    border: none;
+    font-size: 20px;
+
+    transition: all ease-in 0.2s;
+
+    &.enabled {
+      box-shadow: inset 0 -4px 0 var(--main-accent);
+      height: 55px;
+      transform: translateY(-5px);
+    }
+
+    &:first-child {
+      border-top-left-radius: 20px;
+    }
+
+    &:last-child {
+      border-top-right-radius: 20px;
+    }
+  }
+}
