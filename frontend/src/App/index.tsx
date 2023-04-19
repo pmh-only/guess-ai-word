@@ -10,6 +10,7 @@ import { AnimatePresence } from 'framer-motion'
 
 import style from './style.module.scss'
 import PageWrapper from './PageWrapper'
+import GameOptionPage from '../GameOptionPage'
 
 const App: FC = () => {
   const location = useLocation()
@@ -22,6 +23,7 @@ const App: FC = () => {
             <Route path="/" element={<PageWrapper><GameTab /></PageWrapper>} />
             <Route path="/credits" element={<PageWrapper><CreditTab /></PageWrapper>} />
             <Route path="/boards" element={<PageWrapper><BoardTab /></PageWrapper>} />
+            <Route path="/ingame/options" element={<PageWrapper><GameOptionPage /></PageWrapper>} />
           </Routes>
         </AnimatePresence>
       </main>
