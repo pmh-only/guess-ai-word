@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/dynapuff": "^4.5.4",
     "@fontsource/roboto": "^4.5.8",
     "framer-motion": "^10.12.4",
     "normalize.css": "^8.0.1",

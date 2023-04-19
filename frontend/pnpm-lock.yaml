@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  '@fontsource/dynapuff':
+    specifier: ^4.5.4
+    version: 4.5.4
   '@fontsource/roboto':
     specifier: ^4.5.8
     version: 4.5.8
@@ -544,6 +547,10 @@ packages:
     resolution: {integrity: sha512-lxJ9R5ygVm8ZWgYdUweoq5ownDlJ4upvoWmO4eLxBYHdMo+vZ/Rx0EN6MbKWDJOSUGrqJy2Gt+Dyv/VKml0fjg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
+
+  /@fontsource/dynapuff@4.5.4:
+    resolution: {integrity: sha512-P5vFN9ytVCtRtmVmp4tSC1PPzzfclGBf3F4xG6Ony9u6KcZUFvINymeFLFeRkAi8ZO2UY6Imi0m+t2PMa+F6Bg==}
+    dev: false
 
   /@fontsource/roboto@4.5.8:
     resolution: {integrity: sha512-CnD7zLItIzt86q4Sj3kZUiLcBk1dSk81qcqgMGaZe7SQ1P8hFNxhMl5AZthK1zrDM5m74VVhaOpuMGIL4gagaA==}

@@ -22,16 +22,19 @@ const BottomTab: FC = () => {
           className={tabIndex === 1 ? style.enabled : ''}
           onClick={() => { setTabIndex(1) }}>
           <FaInfoCircle />
+          <label>게임 정보</label>
         </button>
         <button
           className={tabIndex === 0 ? style.enabled : ''}
           onClick={() => { setTabIndex(0) }}>
           <FaGamepad />
+          <label>홈</label>
         </button>
         <button
           className={tabIndex === 2 ? style.enabled : ''}
           onClick={() => { setTabIndex(2) }}>
           <FaAward />
+          <label>리더보드</label>
         </button>
       </nav>
     </>
