@@ -4,10 +4,11 @@
 
 :root {
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
-  font-size: 12px;
+  font-size: 20px;
   color: var(--main-text);
   background-color: var(--main-bg);
   overflow: hidden;
+  user-select: none;
 }
 
 html, body, h1, h2, h3, h4, h5, h6, p {
