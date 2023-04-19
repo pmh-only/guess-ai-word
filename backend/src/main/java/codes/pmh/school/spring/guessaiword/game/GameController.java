@@ -161,4 +161,22 @@ public class GameController {
 
         gameService.updatePlayerName(updatePlayerNameDto);
     }
+
+    @PostMapping("/getGameHistory")
+    public GameGetHistoryResponseBody getGameHistory (
+            @RequestBody @Valid GameGetHistoryRequestBody requestBody) {
+
+        GameGetHistoryDto getHistoryDto = new GameGetHistoryDto();
+        GameGetHistoryResponseBody responseBody = new GameGetHistoryResponseBody();
+
+        getHistoryDto.setLastId(requestBody.getLastId());
+        getHistoryDto.setCount(requestBody.getCount());
+
+        gameService.getGameHistory(getHistoryDto);
+
+        responseBody.setGames(getHistoryDto.getGames());
+        responseBody.setLast(getHistoryDto.isLast());
+
+        return responseBody;
+    }
 }

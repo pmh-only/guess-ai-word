@@ -18,6 +18,7 @@ import codes.pmh.school.spring.guessaiword.common.repository.GameRepository;
 import codes.pmh.school.spring.guessaiword.common.repository.GameRoundRepository;
 import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -391,7 +392,7 @@ public class GameService {
     private boolean isValidUpdatePlayerNameRequest (GameUpdatePlayerNameDto updatePlayerNameDto) {
         Game game = updatePlayerNameDto.getGame();
 
-        return game.isFinished() && game.getPlayerName() != null;
+        return game.isFinished() && game.getPlayerName() == null;
     }
 
 
@@ -431,6 +432,18 @@ public class GameService {
 
         gameRound.setChosungHintShowed(true);
         gameRoundRepository.save(gameRound);
+    }
+
+    public void getGameHistory (GameGetHistoryDto getHistoryDto) {
+        int lastId = getHistoryDto.getLastId();
+        int count = getHistoryDto.getCount();
+
+        List<Game> games = lastId == 0
+                ? gameRepository.findByCount(count + 1)
+                : gameRepository.findByLastIdAndCount(lastId, count + 1);
+
+        getHistoryDto.setGames(games.subList(0, Math.min(games.size(), count)));
+        getHistoryDto.setLast(games.size() <= count);
     }
 
 //    -- Utils --

@@ -109,10 +109,6 @@ public class GameRound {
         this.startedAt = startedAt;
     }
 
-    public Game getGame() {
-        return game;
-    }
-
     public void setGame(Game game) {
         this.game = game;
     }

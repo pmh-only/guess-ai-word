@@ -39,10 +39,6 @@ public class GameAskRecord {
         this.response = response;
     }
 
-    public GameRound getRound() {
-        return round;
-    }
-
     public void setRound(GameRound round) {
         this.round = round;
     }
