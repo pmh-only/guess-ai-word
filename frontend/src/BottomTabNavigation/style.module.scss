@@ -33,9 +33,5 @@
     &.enabled > svg {
       background-color: var(--main-secondary);
     }
-
-    &:last-child {
-      border-top-right-radius: 16px;
-    }
   }
 }

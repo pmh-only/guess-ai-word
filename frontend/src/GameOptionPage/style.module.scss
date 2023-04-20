@@ -1,0 +1,101 @@
+.optionContainer {
+  padding: 25px;
+
+  > hr {
+    border: none;
+    border-bottom: 1px solid var(--main-text);
+    opacity: 0.5;
+    margin-bottom: 10px;
+  }
+
+  .optionTitle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 10px;
+
+    > h3 {
+      font-weight: 500;
+      font-size: 24px;
+    }
+  }
+
+  .choice {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 20px;
+    gap: 5px;
+    font-size: 18px;
+
+    > label {
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      cursor: pointer;
+      border-radius: 16px;
+
+      input {
+        appearance: none;
+        outline: 2px solid var(--main-text);
+        border-radius: 16px;
+        width: 18px;
+        height: 18px;
+        transition: all ease-in 0.2s;
+
+        &:checked {
+          border: 3px solid var(--main-bg);
+          outline-color: var(--main-accent);
+          background-color: var(--main-accent);
+        }
+      }
+
+      p:first-child {
+        font-weight: 500;
+      }
+
+      p:last-child {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.bottomNav {
+  position: absolute;
+  background-color: var(--sub-bg);
+  bottom: -80px;
+  width: 100%;
+  display: flex;
+  height: 70px;
+  justify-content: end;
+  align-items: center;
+
+  .btnBar {
+    right: 10px;
+    padding: 0px 20px;
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      border: 0;
+      background-color: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 500;
+      padding: 0px 25px;
+      border-radius: 20px;
+      gap: 5px;
+      cursor: pointer;
+      color: var(--main-accent);
+    }
+
+    button:last-child {
+      background-color: var(--main-accent);
+      padding: 10px 20px;
+      color: var(--main-bg);
+    }
+  }
+}
