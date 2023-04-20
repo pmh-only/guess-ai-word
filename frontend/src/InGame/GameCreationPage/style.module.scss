@@ -1,0 +1,18 @@
+.title {
+  text-align: center;
+  width: 100%;
+  height: calc(100% + 80px);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sub-bg);
+  
+  h1 {
+    font-family: "DynaPuff", cursive;
+  }
+
+  span {
+    color: var(--main-accent)
+  }
+}

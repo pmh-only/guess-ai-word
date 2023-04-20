@@ -10,7 +10,9 @@ import { AnimatePresence } from 'framer-motion'
 
 import style from './style.module.scss'
 import PageWrapper from './PageWrapper'
-import GameOptionPage from '../GameOptionPage'
+import GameOptionPage from '../InGame/GameOptionPage'
+import GameCreationPage from '../InGame/GameCreationPage'
+import { Toaster } from 'react-hot-toast'
 
 const App: FC = () => {
   const location = useLocation()
@@ -24,11 +26,24 @@ const App: FC = () => {
             <Route path="/credits" element={<PageWrapper><CreditTab /></PageWrapper>} />
             <Route path="/boards" element={<PageWrapper><BoardTab /></PageWrapper>} />
             <Route path="/ingame/options" element={<PageWrapper><GameOptionPage /></PageWrapper>} />
+            <Route path="/ingame/createGame" element={<PageWrapper><GameCreationPage /></PageWrapper>} />
           </Routes>
         </AnimatePresence>
       </main>
 
       <BottomTabNavigation />
+      <Toaster toastOptions={{
+        iconTheme: {
+          primary: 'var(--main-accent)',
+          secondary: 'var(--main-secondary)'
+        },
+        position: 'top-center',
+        style: {
+          backgroundColor: 'var(--sub-bg)',
+          borderRadius: 16,
+          boxShadow: 'none'
+        }
+      }} />
     </Container>
   )
 }

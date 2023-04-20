@@ -1,5 +1,5 @@
 import { useState, type FC } from 'react'
-import TitleBar from '../GameTitleBar'
+import TitleBar from '../../GameTitleBar'
 import { MdBook, MdPlayCircle, MdStairs } from 'react-icons/md'
 import style from './style.module.scss'
 
@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 const GameOptionPage: FC = () => {
   const navigate = useNavigate()
   const [gameType, setGameType] = useState('NORMAL')
-  const [wordCategory, setWordCategory] = useState('ANY')
+  const [dictionaryCategory, setdictionaryCategory] = useState('ANY')
 
   return (
     <article>
@@ -47,29 +47,29 @@ const GameOptionPage: FC = () => {
         </div>
 
         <form className={style.choice}>
-          <motion.label whileTap={{ backgroundColor: 'var(--main-secondary)' }} onClick={() => { setWordCategory('ANY') }}>
-            <input checked={wordCategory === 'ANY'} type="radio" name="wordCategory" />
+          <motion.label whileTap={{ backgroundColor: 'var(--main-secondary)' }} onClick={() => { setdictionaryCategory('ANY') }}>
+            <input checked={dictionaryCategory === 'ANY'} type="radio" name="dictionaryCategory" />
             <div>
               <p>전체</p>
               <p>아무 단어나 상관 없어요!</p>
             </div>
           </motion.label>
-          <motion.label whileTap={{ backgroundColor: 'var(--main-secondary)' }} onClick={() => { setWordCategory('ANIMALS') }}>
-            <input checked={wordCategory === 'ANIMALS'} type="radio" name="wordCategory" />
+          <motion.label whileTap={{ backgroundColor: 'var(--main-secondary)' }} onClick={() => { setdictionaryCategory('ANIMALS') }}>
+            <input checked={dictionaryCategory === 'ANIMALS'} type="radio" name="dictionaryCategory" />
             <div>
               <p>동물</p>
               <p>오리, 사자, 고양이, 개 등...</p>
             </div>
           </motion.label>
-          <motion.label whileTap={{ backgroundColor: 'var(--main-secondary)' }} onClick={() => { setWordCategory('FRUITS') }}>
-            <input checked={wordCategory === 'FRUITS'} type="radio" name="wordCategory" />
+          <motion.label whileTap={{ backgroundColor: 'var(--main-secondary)' }} onClick={() => { setdictionaryCategory('FRUITS') }}>
+            <input checked={dictionaryCategory === 'FRUITS'} type="radio" name="dictionaryCategory" />
             <div>
               <p>과일/채소</p>
               <p>귤, 오렌지, 사과, 배 등...</p>
             </div>
           </motion.label>
-          <motion.label whileTap={{ backgroundColor: 'var(--main-secondary)' }} onClick={() => { setWordCategory('TOOLS') }}>
-            <input checked={wordCategory === 'TOOLS'} type="radio" name="wordCategory" />
+          <motion.label whileTap={{ backgroundColor: 'var(--main-secondary)' }} onClick={() => { setdictionaryCategory('TOOLS') }}>
+            <input checked={dictionaryCategory === 'TOOLS'} type="radio" name="dictionaryCategory" />
             <div>
               <p>도구</p>
               <p>드라이버, 자, 젖병 등...</p>
@@ -87,7 +87,7 @@ const GameOptionPage: FC = () => {
           </motion.button>
           <motion.button
             whileTap={{ backgroundColor: 'var(--main-secondary)' }}
-            onClick={() => { navigate(`/ingame/createGame?gameType=${gameType}&wordCategory=${wordCategory}`) }}>
+            onClick={() => { navigate('/ingame/createGame', { replace: true, state: { gameType, dictionaryCategory } }) }}>
               <MdPlayCircle size={24} />
               플레이
           </motion.button>
