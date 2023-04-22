@@ -11,8 +11,8 @@ import { AnimatePresence } from 'framer-motion'
 import style from './style.module.scss'
 import PageWrapper from './PageWrapper'
 import GameOptionPage from '../InGame/GameOptionPage'
-import GameCreationPage from '../InGame/GameCreationPage'
 import { Toaster } from 'react-hot-toast'
+import GameRoundPage from '../InGame/GameRoundPage'
 
 const App: FC = () => {
   const location = useLocation()
@@ -26,7 +26,7 @@ const App: FC = () => {
             <Route path="/credits" element={<PageWrapper><CreditTab /></PageWrapper>} />
             <Route path="/boards" element={<PageWrapper><BoardTab /></PageWrapper>} />
             <Route path="/ingame/options" element={<PageWrapper><GameOptionPage /></PageWrapper>} />
-            <Route path="/ingame/createGame" element={<PageWrapper><GameCreationPage /></PageWrapper>} />
+            <Route path="/ingame/roundNotice" element={<PageWrapper><GameRoundPage /></PageWrapper>} />
           </Routes>
         </AnimatePresence>
       </main>

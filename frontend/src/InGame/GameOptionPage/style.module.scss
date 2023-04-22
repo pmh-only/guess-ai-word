@@ -49,6 +49,10 @@
           outline-color: var(--main-accent);
           background-color: var(--main-accent);
         }
+
+        &:disabled {
+          filter: grayscale(1);
+        }
       }
 
       p:first-child {
@@ -86,6 +90,7 @@
       align-items: center;
       font-weight: 500;
       padding: 0px 25px;
+      transition: all ease-in 0.2s;
       border-radius: 20px;
       gap: 5px;
       cursor: pointer;

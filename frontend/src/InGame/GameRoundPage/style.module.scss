@@ -1,0 +1,26 @@
+.roundNotice {
+  background-color: var(--main-accent);
+  width: 100%;
+  height: calc(100% + 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .num {
+    font-family: "DynaPuff", cursive;
+    text-align: center;
+    border-radius: 200px;
+    color: var(--main-bg);
+    border: 6px solid var(--main-bg);
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    p:first-child {
+      font-size: 75px;
+    }
+  }
+}
