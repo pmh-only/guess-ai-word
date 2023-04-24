@@ -1,0 +1,110 @@
+.container {
+  width: 100%;
+  height: calc(100% + 80px);
+
+  .qnaList {
+    width: 100%;
+    height: calc(100% - 60px - 80px);
+    margin: 0;
+    padding: 0;
+  }
+
+  .inputBox {
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+
+    .input {
+      border: 0px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      height: 45px;
+      padding-left: 20px;
+      transition: background-color ease-in-out 0.3s;
+      background-color: var(--main-semiaccent);
+      color: var(--main-bg);
+      font-weight: 600;
+      border-radius: 100px;
+      cursor: pointer;
+
+      &.isWrong {
+        background-color: var(--main-negative) !important;
+        animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+      }
+
+      &.isCorrect {
+        background-color: var(--main-positive) !important;
+      }
+
+      > i {
+        opacity: 0.8;
+        font-size: 15px;
+      }
+
+      > button {
+        border: none;
+        height: 45px;
+        width: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 100px;
+        color: var(--main-bg);
+        transition: background-color ease-in-out 0.3s;
+        background-color: transparent;
+      }
+    }
+    
+    .inputReal:focus ~ .input {
+      background-color: var(--main-accent);
+    }
+
+    .inputReal {
+      opacity: 0;
+      width: 0px;
+    }
+  }
+
+  .action {
+    width: 100%;
+    display: flex;
+    position: relative;
+    bottom: 0;
+    height: 80px;
+    justify-content: stretch;
+
+    > button {
+      display: flex;
+      color: var(--main-text);
+      background-color: var(--sub-bg);
+      flex-direction: column;
+      justify-content: center;
+      cursor: pointer;
+      align-items: center;
+      width: 100%;
+      border: none;
+    }
+  }
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}

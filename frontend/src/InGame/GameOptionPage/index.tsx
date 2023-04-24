@@ -7,6 +7,23 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 
+const gameTypeValues = {
+  NORMAL: {
+    round: 1,
+    askable: 5,
+    candidate: 3,
+    askThrottle: 5,
+    submitThrottle: 5
+  },
+  SPEEDRUN: {
+    round: 5,
+    askable: 100,
+    candidate: 3,
+    askThrottle: 1,
+    submitThrottle: 5
+  }
+} as any
+
 const GameOptionPage: FC = () => {
   const navigate = useNavigate()
   const [gameType, setGameType] = useState('NORMAL')
@@ -36,7 +53,8 @@ const GameOptionPage: FC = () => {
     navigate('/ingame/roundNotice', {
       replace: true,
       state: {
-        round: 1
+        round: 1,
+        gameTypeValues: gameTypeValues[gameType]
       }
     })
   }
