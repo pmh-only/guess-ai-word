@@ -25,6 +25,20 @@ const InGamePage: FC = () => {
   const [isWrong, setIsWrong] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
 
+  const skipRound = (): void => {
+    if (state.gameTypeValues.round <= state.round) {
+      navigate('/ingame/result', {
+        replace: true
+      })
+      return
+    }
+
+    navigate('/ingame/roundNotice', {
+      replace: true,
+      state: { ...state, round: state.round as number + 1 }
+    })
+  }
+
   const submitAnswer = async (): Promise<void> => {
     if (input.length < 1) {
       inputRef.current?.focus()
@@ -146,6 +160,7 @@ const InGamePage: FC = () => {
 
       <nav className={style.action}>
         <motion.button
+          onClick={() => { skipRound() }}
           transition={{ duration: 0.2 }}
           whileTap={{ backgroundColor: 'var(--main-secondary)' }}>
           <MdSkipNext size={24} />
