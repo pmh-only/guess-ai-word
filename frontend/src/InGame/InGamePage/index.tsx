@@ -93,6 +93,26 @@ const InGamePage: FC = () => {
     }, 3 * 1000)
   }
 
+  const chosungHint = async (): Promise<void> => {
+    const qnaIndex = qnaList.length
+    setQnaResult((qnaList) => [
+      ...qnaList,
+      {
+        question: '초성이 무엇인가요? (점수 50% 감소, 중복 적용 X)',
+        answer: null
+      }
+    ])
+
+    const { chosungs } = await fetch('/api/games/getChosungHint', {
+      method: 'POST'
+    }).then(async (res) => await res.json())
+
+    setQnaResult((qnaList) => {
+      qnaList[qnaIndex].answer = `정답의 초성은 ${chosungs as string}입니다`
+      return [...qnaList]
+    })
+  }
+
   useEffect(() => {
     if (state === null) {
       navigate('/', { replace: false })
@@ -173,6 +193,7 @@ const InGamePage: FC = () => {
           질문하기
         </motion.button>
         <motion.button
+          onClick={() => { void chosungHint() }}
           transition={{ duration: 0.2 }}
           whileTap={{ backgroundColor: 'var(--main-secondary)' }}>
           <MdTextFields size={24} />
