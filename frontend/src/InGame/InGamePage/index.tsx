@@ -35,19 +35,40 @@ const InGamePage: FC = () => {
   const [isCorrect, setIsCorrect] = useState(false)
   const [isWrong, setIsWrong] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
+  const qnaListRef = createRef<HTMLUListElement>()
 
-  const skipRound = (): void => {
-    if (state.gameTypeValues.round <= state.round) {
-      navigate('/ingame/result', {
-        replace: true
+  useEffect(() => {
+    qnaListRef.current?.scrollTo(0, qnaListRef.current.scrollHeight)
+  }, [qnaList])
+
+  const skipRound = async (): Promise<void> => {
+    setIsLoading(true)
+
+    const { correctAnswer } = await fetch('/api/games/getCorrectAnswer', { method: 'POST' })
+      .then(async (res) => await res.json())
+
+    setInput(correctAnswer)
+    setQnaResult((qnaList) => [
+      ...qnaList,
+      {
+        question: '정답은 무엇인가요?',
+        answer: `정답은 ${correctAnswer as string}였습니다!`
+      }
+    ])
+
+    setTimeout(() => {
+      if (state.gameTypeValues.round <= state.round) {
+        navigate('/ingame/result', {
+          replace: true
+        })
+        return
+      }
+
+      navigate('/ingame/roundNotice', {
+        replace: true,
+        state: { ...state, round: state.round as number + 1 }
       })
-      return
-    }
-
-    navigate('/ingame/roundNotice', {
-      replace: true,
-      state: { ...state, round: state.round as number + 1 }
-    })
+    }, 1000)
   }
 
   const submitAnswer = async (): Promise<void> => {
@@ -200,7 +221,7 @@ const InGamePage: FC = () => {
     <div className={style.container}>
       <TitleBar title={`${state.round as number}라운드`} />
 
-      <ul className={style.qnaList}>
+      <ul className={style.qnaList} ref={qnaListRef}>
         {qnaList.map((qna, i) => (
           <li key={i}>
             <p>Q. {qna.question.replaceAll('%s', input.length > 0 ? input : '???')}</p>
@@ -248,7 +269,7 @@ const InGamePage: FC = () => {
 
       <nav className={style.action}>
         <motion.button
-          onClick={() => { skipRound() }}
+          onClick={() => { void skipRound() }}
           transition={{ duration: 0.2 }}
           whileTap={{ backgroundColor: 'var(--main-secondary)' }}>
           <MdSkipNext size={24} />
