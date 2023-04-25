@@ -239,7 +239,7 @@ const InGamePage: FC = () => {
         <input
           ref={inputRef}
           enterKeyHint="done"
-          type="text"
+          type="search"
           autoFocus
           autoComplete="off"
           value={input}

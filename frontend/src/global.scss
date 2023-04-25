@@ -19,3 +19,7 @@ html, body, h1, h2, h3, h4, h5, h6, p {
 html, body, #root {
   height: 100%;
 }
+
+button, label, div {
+  -webkit-tap-highlight-color: transparent;
+}
