@@ -80,6 +80,8 @@ const InGamePage: FC = () => {
     if (isLoading || isCorrect || isWrong) return
     setIsLoading(true)
 
+    inputRef.current?.blur()
+
     const qnaIndex = qnaList.length
     setQnaResult([...qnaList, {
       question: `정답은 ${input}인가요..?`,
