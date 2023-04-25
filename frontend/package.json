@@ -19,6 +19,7 @@
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.8.0",
     "react-router-dom": "^6.9.0",
+    "react-spinners": "^0.13.8",
     "react-string-replace": "^1.1.0",
     "react-tsparticles": "^2.9.3",
     "tsparticles": "^2.9.3",

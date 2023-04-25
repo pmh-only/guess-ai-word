@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import style from './style.module.scss'
 import { MdQuestionAnswer, MdSend, MdSkipNext, MdTextFields, MdTimer } from 'react-icons/md'
 import FanfareParticle from './FanfareParticle'
+import SyncLoader from 'react-spinners/SyncLoader'
 import reactStringReplace from 'react-string-replace'
 
 interface QnAListItem {
@@ -233,7 +234,9 @@ const InGamePage: FC = () => {
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className={style.loading}>_</motion.p>}
+                className={style.loading}>
+                  <SyncLoader size={10} color="#ec8b8b" />
+              </motion.p>}
             {qna.answer !== null &&
               <motion.p
                 initial={{ opacity: 0 }}
