@@ -31,6 +31,9 @@ dependencies:
   react-router-dom:
     specifier: ^6.9.0
     version: 6.9.0(react-dom@18.2.0)(react@18.2.0)
+  react-string-replace:
+    specifier: ^1.1.0
+    version: 1.1.0
   react-tsparticles:
     specifier: ^2.9.3
     version: 2.9.3(react@18.2.0)
@@ -2664,6 +2667,11 @@ packages:
     dependencies:
       '@remix-run/router': 1.4.0
       react: 18.2.0
+    dev: false
+
+  /react-string-replace@1.1.0:
+    resolution: {integrity: sha512-N6RalSDFGbOHs0IJi1H611WbZsvk3ZT47Jl2JEXFbiS3kTwsdCYij70Keo/tWtLy7sfhDsYm7CwNM/WmjXIaMw==}
+    engines: {node: '>=0.12.0'}
     dev: false
 
   /react-tsparticles@2.9.3(react@18.2.0):

@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import style from './style.module.scss'
 import { MdQuestionAnswer, MdSend, MdSkipNext, MdTextFields, MdTimer } from 'react-icons/md'
 import FanfareParticle from './FanfareParticle'
+import reactStringReplace from 'react-string-replace'
 
 interface QnAListItem {
   question: string
@@ -226,15 +227,23 @@ const InGamePage: FC = () => {
       <ul className={style.qnaList} ref={qnaListRef}>
         {qnaList.map((qna, i) => (
           <li key={i}>
-            <p>Q. {qna.question.replaceAll('%s', input.length > 0 ? input : '???')}</p>
-            {qna.answer === null
-              ? <p></p>
-              : <p>{qna.answer.replaceAll('%s', input.length > 0 ? input : '???')}</p>}
+            <p>Q. {reactStringReplace(qna.question, '%s', () =>
+              <i>{input}</i>)}</p>
+            {qna.answer === null &&
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className={style.loading}>_</motion.p>}
+            {qna.answer !== null &&
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}>
+                {reactStringReplace(qna.answer, '%s', () =>
+                <i>{input}</i>)}
+              </motion.p>}
           </li>
         ))}
-        <li>
-
-        </li>
+        <li></li>
       </ul>
 
       <div className={style.inputBox}>
@@ -276,6 +285,7 @@ const InGamePage: FC = () => {
           whileTap={{ backgroundColor: 'var(--main-secondary)' }}>
           <MdSkipNext size={24} />
           스킵
+          <p>0점 처리</p>
         </motion.button>
         <motion.button
           onClick={() => { void chosungHint() }}
@@ -283,6 +293,7 @@ const InGamePage: FC = () => {
           whileTap={{ backgroundColor: 'var(--main-secondary)' }}>
           <MdTextFields size={24} />
           초성힌트
+          <p>-50%점</p>
         </motion.button>
         <motion.button
           className={isQuestionFinish ? style.finished : ''}
@@ -293,8 +304,15 @@ const InGamePage: FC = () => {
             ? <>남은 힌트 없음</>
             : (<>
               {isQuestionLoading ? <MdTimer size={24} /> : <MdQuestionAnswer size={24} />}
-              {isQuestionLoading ? `${state.gameTypeValues.askThrottle as string}초 대기` : '질문하기'}
+              {isQuestionLoading ? `${state.gameTypeValues.askThrottle as string}초 대기` : <>질문하기<p>-10점</p></>}
             </>)}
+            <AnimatePresence>
+              {qnaList.length < 1 && (
+                <motion.img
+                  exit={{ opacity: 0 }}
+                  width={150} src="/intro.png" className={style.intro} />
+              )}
+            </AnimatePresence>
         </motion.button>
       </nav>
 
