@@ -1,7 +1,7 @@
 import { useEffect, type FC, useState, createRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import TitleBar from '../../GameTitleBar'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import style from './style.module.scss'
 import { MdQuestionAnswer, MdSend, MdSkipNext, MdTextFields, MdTimer } from 'react-icons/md'
@@ -12,15 +12,24 @@ interface QnAListItem {
   answer: string | null
 }
 
+interface CandidateListItem {
+  askPrompt: string
+  id: number
+}
+
 const InGamePage: FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const { state } = location
 
   const [qnaList, setQnaResult] = useState<QnAListItem[]>([])
+  const [candidateList, setCandidateList] = useState<CandidateListItem[]>([])
+  const [candidateSecret, setCandidateSecret] = useState('')
+  const [candidateSelect, setCandidateSelect] = useState<number | null>(null)
   const inputRef = createRef<HTMLInputElement>()
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isQuestionLoading, setIsQuestionLoading] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
   const [isWrong, setIsWrong] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
@@ -93,12 +102,58 @@ const InGamePage: FC = () => {
     }, 3 * 1000)
   }
 
+  const createCandidates = async (): Promise<void> => {
+    if (isQuestionLoading) return
+    setIsQuestionLoading(true)
+
+    const { candidates, candidateSecret } = await fetch('/api/games/createAskCandidate', {
+      method: 'POST'
+    }).then(async (res) => await res.json())
+
+    setCandidateList(candidates)
+    setCandidateSecret(candidateSecret)
+    setTimeout(() => {
+      setIsQuestionLoading(false)
+    }, state.gameTypeValues.askThrottle * 1000)
+  }
+
+  const resolveCandidate = async (): Promise<void> => {
+    const qnaIndex = qnaList.length
+    const candidate = candidateList.find((e) => e.id === candidateSelect) as CandidateListItem
+
+    setQnaResult((qnaList) => [
+      ...qnaList,
+      {
+        question: candidate.askPrompt,
+        answer: null
+      }
+    ])
+
+    setCandidateList([])
+    setCandidateSelect(null)
+    setCandidateSecret('')
+
+    const { response } = await fetch('/api/games/askToAI', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        candidateId: candidate.id,
+        candidateSecret
+      })
+    }).then(async (res) => await res.json())
+
+    setQnaResult((qnaList) => {
+      qnaList[qnaIndex].answer = response
+      return [...qnaList]
+    })
+  }
+
   const chosungHint = async (): Promise<void> => {
     const qnaIndex = qnaList.length
     setQnaResult((qnaList) => [
       ...qnaList,
       {
-        question: '초성이 무엇인가요? (점수 50% 감소, 중복 적용 X)',
+        question: '초성이 무엇인가요?',
         answer: null
       }
     ])
@@ -140,8 +195,10 @@ const InGamePage: FC = () => {
       <ul className={style.qnaList}>
         {qnaList.map((qna, i) => (
           <li key={i}>
-            <p>{qna.question}</p>
-            <p>{qna.answer}</p>
+            <p>Q. {qna.question.replaceAll('%s', input.length > 0 ? input : '???')}</p>
+            {qna.answer === null
+              ? <p></p>
+              : <p>{qna.answer.replaceAll('%s', input.length > 0 ? input : '???')}</p>}
           </li>
         ))}
       </ul>
@@ -187,21 +244,60 @@ const InGamePage: FC = () => {
           스킵
         </motion.button>
         <motion.button
-          transition={{ duration: 0.2 }}
-          whileTap={{ backgroundColor: 'var(--main-secondary)' }}>
-          <MdQuestionAnswer size={24} />
-          질문하기
-        </motion.button>
-        <motion.button
           onClick={() => { void chosungHint() }}
           transition={{ duration: 0.2 }}
           whileTap={{ backgroundColor: 'var(--main-secondary)' }}>
           <MdTextFields size={24} />
           초성힌트
         </motion.button>
+        <motion.button
+          className={isQuestionLoading ? style.loading : ''}
+          onClick={() => { void createCandidates() }}
+          transition={{ duration: 0.2 }}
+          whileTap={{ backgroundColor: 'var(--main-secondary)' }}>
+          {isQuestionLoading ? <MdTimer size={24} /> : <MdQuestionAnswer size={24} />}
+          {isQuestionLoading ? `${state.gameTypeValues.askThrottle as string}초 대기` : '질문하기'}
+        </motion.button>
       </nav>
 
       {isCorrect && <FanfareParticle />}
+      <AnimatePresence>
+        {candidateList.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className={style.candidateModal}>
+            <div className={style.content}>
+              <ul>
+                {candidateList.map((candidate, i) => (
+                  <motion.li
+                    transition={{ delay: i / 10 }}
+                    initial={{ opacity: 0, translateX: 100 }}
+                    animate={{ opacity: 1, translateX: 0 }}
+                    key={i}>
+                    <button
+                      onClick={() => { setCandidateSelect(candidate.id) }}
+                      className={candidateSelect === candidate.id ? style.selected : ''}>
+                      {candidate.askPrompt.replaceAll('%s', '???')}
+                    </button>
+                  </motion.li>
+                ))}
+              </ul>
+
+              {candidateSelect !== null && (
+                <motion.button
+                  initial={{ opacity: 0, translateY: 100 }}
+                  animate={{ opacity: 1, translateY: 0 }}
+                  onClick={() => { void resolveCandidate() }}>
+                  질문하기!
+                  <MdSend />
+                </motion.button>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
