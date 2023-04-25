@@ -111,7 +111,7 @@ const InGamePage: FC = () => {
 
     setIsCorrect(true)
     setTimeout(() => {
-      if (state.gameTypeValues.round >= state.round) {
+      if (state.gameTypeValues.round <= state.round) {
         navigate('/ingame/result', {
           replace: true
         })
