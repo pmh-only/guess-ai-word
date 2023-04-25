@@ -14,6 +14,7 @@ import GameOptionPage from '../InGame/GameOptionPage'
 import { Toaster } from 'react-hot-toast'
 import GameRoundPage from '../InGame/GameRoundPage'
 import InGamePage from '../InGame/InGamePage'
+import GameResultPage from '../InGame/GameResultPage'
 
 const App: FC = () => {
   const location = useLocation()
@@ -29,6 +30,7 @@ const App: FC = () => {
             <Route path="/ingame" element={<PageWrapper><InGamePage /></PageWrapper>} />
             <Route path="/ingame/options" element={<PageWrapper><GameOptionPage /></PageWrapper>} />
             <Route path="/ingame/roundNotice" element={<PageWrapper><GameRoundPage /></PageWrapper>} />
+            <Route path="/ingame/result" element={<PageWrapper><GameResultPage /></PageWrapper>} />
           </Routes>
         </AnimatePresence>
       </main>

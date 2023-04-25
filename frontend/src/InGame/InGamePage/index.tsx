@@ -30,6 +30,8 @@ const InGamePage: FC = () => {
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isQuestionLoading, setIsQuestionLoading] = useState(false)
+  const [isQuestionFinish, setIsQuestionFinish] = useState(false)
+  const [questionCount, setQuestionCount] = useState(0)
   const [isCorrect, setIsCorrect] = useState(false)
   const [isWrong, setIsWrong] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
@@ -103,7 +105,7 @@ const InGamePage: FC = () => {
   }
 
   const createCandidates = async (): Promise<void> => {
-    if (isQuestionLoading) return
+    if (isQuestionLoading || isQuestionFinish) return
     setIsQuestionLoading(true)
 
     const { candidates, candidateSecret } = await fetch('/api/games/createAskCandidate', {
@@ -112,6 +114,12 @@ const InGamePage: FC = () => {
 
     setCandidateList(candidates)
     setCandidateSecret(candidateSecret)
+    setQuestionCount(questionCount + 1)
+
+    if (questionCount + 1 >= state.gameTypeValues.askable) {
+      setIsQuestionFinish(true)
+    }
+
     setTimeout(() => {
       setIsQuestionLoading(false)
     }, state.gameTypeValues.askThrottle * 1000)
@@ -201,6 +209,9 @@ const InGamePage: FC = () => {
               : <p>{qna.answer.replaceAll('%s', input.length > 0 ? input : '???')}</p>}
           </li>
         ))}
+        <li>
+
+        </li>
       </ul>
 
       <div className={style.inputBox}>
@@ -251,12 +262,16 @@ const InGamePage: FC = () => {
           초성힌트
         </motion.button>
         <motion.button
-          className={isQuestionLoading ? style.loading : ''}
+          className={isQuestionFinish ? style.finished : ''}
           onClick={() => { void createCandidates() }}
           transition={{ duration: 0.2 }}
           whileTap={{ backgroundColor: 'var(--main-secondary)' }}>
-          {isQuestionLoading ? <MdTimer size={24} /> : <MdQuestionAnswer size={24} />}
-          {isQuestionLoading ? `${state.gameTypeValues.askThrottle as string}초 대기` : '질문하기'}
+          {isQuestionFinish
+            ? <>남은 힌트 없음</>
+            : (<>
+              {isQuestionLoading ? <MdTimer size={24} /> : <MdQuestionAnswer size={24} />}
+              {isQuestionLoading ? `${state.gameTypeValues.askThrottle as string}초 대기` : '질문하기'}
+            </>)}
         </motion.button>
       </nav>
 
