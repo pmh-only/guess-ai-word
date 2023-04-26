@@ -1,6 +1,6 @@
 import { useEffect, type FC, useState, createRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import TitleBar from '../../GameTitleBar'
+import TitleBar from '../../TitleBar'
 import { AnimatePresence, motion } from 'framer-motion'
 
 import style from './style.module.scss'
@@ -133,9 +133,16 @@ const InGamePage: FC = () => {
     if (isQuestionLoading || isQuestionFinish) return
     setIsQuestionLoading(true)
 
-    const { candidates, candidateSecret } = await fetch('/api/games/createAskCandidate', {
+    const { candidates, candidateSecret, isFault } = await fetch('/api/games/createAskCandidate', {
       method: 'POST'
     }).then(async (res) => await res.json())
+      .catch(() => ({ isFault: true }))
+
+    if (candidates === undefined || isFault === true) {
+      setIsQuestionLoading(false)
+      setIsQuestionFinish(true)
+      return
+    }
 
     setCandidateList(candidates)
     setCandidateSecret(candidateSecret)
@@ -154,7 +161,7 @@ const InGamePage: FC = () => {
     const qnaIndex = qnaList.length
     const candidate = candidateList.find((e) => e.id === candidateSelect) as CandidateListItem
 
-    setQnaResult((qnaList) => [
+    setQnaResult([
       ...qnaList,
       {
         question: candidate.askPrompt,
@@ -174,6 +181,7 @@ const InGamePage: FC = () => {
         candidateSecret
       })
     }).then(async (res) => await res.json())
+      .catch(() => ({ response: '오류!' }))
 
     setQnaResult((qnaList) => {
       qnaList[qnaIndex].answer = response
@@ -348,7 +356,7 @@ const InGamePage: FC = () => {
                 <motion.button
                   initial={{ opacity: 0, translateY: 100 }}
                   animate={{ opacity: 1, translateY: 0 }}
-                  onClick={() => { void resolveCandidate() }}>
+                  onClick={() => { void (!isLoading && resolveCandidate()) }}>
                   질문하기!
                   <MdSend />
                 </motion.button>

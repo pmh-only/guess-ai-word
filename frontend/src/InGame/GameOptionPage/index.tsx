@@ -1,5 +1,5 @@
 import { useState, type FC } from 'react'
-import TitleBar from '../../GameTitleBar'
+import TitleBar from '../../TitleBar'
 import { MdBook, MdPlayCircle, MdStairs } from 'react-icons/md'
 import style from './style.module.scss'
 
@@ -61,7 +61,7 @@ const GameOptionPage: FC = () => {
 
   return (
     <article>
-      <TitleBar title="게임 옵션 선택" />
+      <TitleBar title="게임 옵션 선택" isFreepass />
 
       <div className={style.optionContainer}>
         <div className={style.optionTitle}>

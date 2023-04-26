@@ -1,6 +1,6 @@
 import { useState, type FC, useEffect } from 'react'
 import CountUp from 'react-countup'
-import TitleBar from '../../GameTitleBar'
+import TitleBar from '../../TitleBar'
 import { AnimatePresence, motion } from 'framer-motion'
 
 import style from './style.module.scss'
@@ -39,7 +39,7 @@ const GameResultPage: FC = () => {
 
   return (
     <div className={style.container}>
-      <TitleBar title="게임 결과" />
+      <TitleBar title="게임 결과" isFreepass />
 
       <div className={style.final}>
         <p>최종 점수</p>
@@ -84,6 +84,9 @@ const GameResultPage: FC = () => {
                 autoFocus
                 value={playerName}
                 enterKeyHint='done'
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') void submitPlayerName()
+                }}
                 onChange={(e) => { setPlayerName(e.target.value.trim()) }}
                 type="text" placeholder='여기를 눌러 입력' />
 

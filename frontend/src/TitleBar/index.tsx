@@ -7,9 +7,10 @@ import { useNavigate } from 'react-router-dom'
 
 interface Props {
   title: string
+  isFreepass?: boolean
 }
 
-const TitleBar: FC<Props> = ({ title }) => {
+const TitleBar: FC<Props> = ({ title, isFreepass = false }) => {
   const [showCloseModal, setShowClassModal] = useState(false)
   const navigate = useNavigate()
 
@@ -17,7 +18,11 @@ const TitleBar: FC<Props> = ({ title }) => {
     <>
       <nav className={style.titleBar}>
         <motion.button
-          onClick={() => { setShowClassModal(true) }}
+          onClick={() => {
+            isFreepass
+              ? navigate('/')
+              : setShowClassModal(true)
+          }}
           whileTap={{ backgroundColor: 'var(--main-secondary)' }}
           className={style.backBtn}>
           <MdArrowBack size={24} />
