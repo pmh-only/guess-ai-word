@@ -1,6 +1,4 @@
 import { useState, type FC, useEffect } from 'react'
-import { UnmountClosed } from 'react-collapse'
-import { VariableSizeList } from 'react-window'
 
 import style from './style.module.scss'
 import TitleBar from '../TitleBar'
@@ -28,8 +26,6 @@ const BoardTab: FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [lastId, setLastId] = useState(0)
   const [gameDetail, setGameDetail] = useState<GameDetail[]>([])
-  const [openGameDetail, setOpenGameDetail] = useState(0)
-  const [openGameRoundDetail, setOpenGameRoundDetail] = useState(0)
 
   const fetchGameHistory = async (): Promise<void> => {
     if (isLast || isLoading) return
@@ -60,29 +56,6 @@ const BoardTab: FC = () => {
   return (
     <section className={style.container}>
       <TitleBar title="리더보드" isFreepass />
-      <VariableSizeList
-        height={500}
-        width="100%"
-        itemSize={(i) => 100}
-        itemCount={gameDetail.length}>
-        {({ index, style }) => (
-          <div style={style}>
-            <button onClick={() => { setOpenGameDetail(gameDetail[index].id) }}>#{gameDetail[index].id} {gameDetail[index].finalScore}</button>
-            <UnmountClosed isOpened={openGameDetail === gameDetail[index].id}>
-              <ul>
-                {gameDetail[index].rounds.map((round, i) => (
-                  <li key={i}>
-                    <button onClick={() => { setOpenGameRoundDetail(round.id) }}>{round.answer}</button>
-                    <UnmountClosed isOpened={openGameRoundDetail === round.id}>
-                      {round.correctAnswer ? 'a' : 'n'}
-                    </UnmountClosed>
-                  </li>
-                ))}
-              </ul>
-            </UnmountClosed>
-          </div>
-        )}
-      </VariableSizeList>
     </section>
   )
 }
