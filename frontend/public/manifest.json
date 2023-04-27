@@ -12,7 +12,33 @@
   "categories": [
     "games"
   ],
-  "screenshots": [],
+  "screenshots": [
+    {
+      "src": "webapp/screenshots/screenshot1.png",
+      "size": "1440x3200",
+      "platform": "narrow"
+    },
+    {
+      "src": "webapp/screenshots/screenshot2.png",
+      "size": "1440x3200",
+      "platform": "narrow"
+    },
+    {
+      "src": "webapp/screenshots/screenshot3.png",
+      "size": "1440x3200",
+      "platform": "narrow"
+    },
+    {
+      "src": "webapp/screenshots/screenshot4.png",
+      "size": "1440x3200",
+      "platform": "narrow"
+    },
+    {
+      "src": "webapp/screenshots/screenshot5.png",
+      "size": "1440x3200",
+      "platform": "narrow"
+    }
+  ],
   "icons": [
     {
       "src": "webapp/windows11/SmallTile.scale-100.png",
