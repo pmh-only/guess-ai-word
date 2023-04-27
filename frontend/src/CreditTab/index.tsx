@@ -1,36 +1,20 @@
 import { type FC } from 'react'
 import style from './style.module.scss'
-import { MdHeartBroken, MdMail } from 'react-icons/md'
 import TitleBar from '../TitleBar'
 
 const CreditTab: FC = () =>
   <>
     <TitleBar isFreepass title="게임 정보" />
-    <section className={style.credit}>
-      <h1>Credit.</h1>
-      <p>Guess AI Word</p>
-
-      <h2>Spring Backend</h2>
-      <p>Minhyeok Park</p>
-
-      <h2>React.js Frontend</h2>
-      <p>Minhyeok Park</p>
-
-      <h2>Powered by</h2>
-      <p>OpenAI GPT3.5 API</p>
-
-      <h2>Design ref. by</h2>
-      <p>Google Material Design 3</p>
-
-      <h2>Source code</h2>
-      <p><a target='_blank' href="https://github.com/pmh-only/guess-ai-word" rel="noreferrer">pmh-only/guess-ai-word</a></p>
-
-      <h2>Copyright</h2>
-      <p>Copyright &copy; 2023. Minhyeok Park.</p>
-
-      <p><MdMail /> opensource@pmh.codes</p>
-      <p><MdHeartBroken /></p>
-    </section>
+    <ul className={style.credit}>
+      <li><img src="/credit/uiux.webp" /><div className={style.content}><h2>UI/UX Design</h2><p>Minhyeok Park</p></div></li>
+      <li><img src="/credit/frontend.webp" /><div className={style.content}><h2>React Frontend</h2><p>Minhyeok Park</p></div></li>
+      <li><img src="/credit/backend.webp" /><div className={style.content}><h2>Spring Backend</h2><p>Minhyeok Park</p></div></li>
+      <li><img src="/credit/prompt.webp" /><div className={style.content}><h2>Prompt Eng.</h2><p>Minhyeok Park</p></div></li>
+      <li><img src="/credit/openai.webp" className={style.openai} /><div className={style.content}><h2>Powered by</h2><p>ChatGPT API</p></div></li>
+      <li><img src="/credit/designref.webp" /><div className={style.content}><h2>Design ref. by</h2><p>Google Material Design 3</p></div></li>
+      <li><div className={style.content}><h2>Copyright</h2><p>&copy; 2023. Minhyeok Park</p><a target='_blank' href="https://github.com/pmh-only/guess-ai-word/blob/main/LICENSE.md" rel="noreferrer">Read more</a></div></li>
+      <li><div className={style.content}><h2>Source Code</h2><p>pmh-only/guessaiword</p><a target='_blank' href="https://github.com/pmh-only/guess-ai-word" rel="noreferrer">Github</a></div></li>
+    </ul>
   </>
 
 export default CreditTab
