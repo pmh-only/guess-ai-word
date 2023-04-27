@@ -32,7 +32,7 @@ const BottomTabNavigation: FC = () => {
             className={location.pathname === '/' ? style.enabled : ''}
             onClick={() => { navigate('/') }}>
             <MdGames />
-            <label>홈</label>
+            <label>플레이</label>
           </motion.button>
           <motion.button
             transition={{ duration: 0.2 }}

@@ -3,26 +3,11 @@ import { useState, type FC, useEffect } from 'react'
 import style from './style.module.scss'
 import TitleBar from '../TitleBar'
 import { MdArrowForward } from 'react-icons/md'
-
-interface GameDetail {
-  dictionaryCategory: string
-  finalScore: number
-  gameType: string
-  id: number
-  playerName: string | null
-  rounds: Array<{
-    id: number
-    answer: string
-    chosungHintShowed: boolean
-    correctAnswer: boolean
-    asks: Array<{
-      askPrompt: string
-      response: string
-    }>
-  }>
-}
+import { useNavigate } from 'react-router-dom'
+import { type GameDetail } from '../datatype'
 
 const BoardTab: FC = () => {
+  const navigate = useNavigate()
   const [games, setGames] = useState<Map<string, GameDetail[]>>(new Map())
 
   const fetchGameLeaderboard = (gameType: string): void => {
@@ -56,7 +41,13 @@ const BoardTab: FC = () => {
           <li key={i}>
             <p><i>{i + 1}등</i> {game.playerName ?? '익명'}</p>
             <p><i>{game.finalScore}</i>점</p>
-            <button>자세히 <MdArrowForward /></button>
+            <button onClick={() => {
+              navigate('/boards/detail', {
+                state: { game }
+              })
+            }}>
+              자세히 <MdArrowForward />
+            </button>
           </li>
         ))}
         <li>
@@ -67,7 +58,13 @@ const BoardTab: FC = () => {
           <li key={i}>
             <p><i>{i + 1}등</i> {game.playerName ?? '익명'}</p>
             <p><i>{game.finalScore}</i>점</p>
-            <button>자세히 <MdArrowForward /></button>
+            <button onClick={() => {
+              navigate('/boards/detail', {
+                state: { game }
+              })
+            }}>
+              자세히 <MdArrowForward />
+            </button>
           </li>
         ))}
       </ul>

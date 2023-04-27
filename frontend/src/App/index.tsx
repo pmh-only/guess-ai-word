@@ -15,6 +15,7 @@ import { Toaster } from 'react-hot-toast'
 import GameRoundPage from '../InGame/GameRoundPage'
 import InGamePage from '../InGame/InGamePage'
 import GameResultPage from '../InGame/GameResultPage'
+import GameDetailPage from '../GameDetailPage'
 
 const App: FC = () => {
   const location = useLocation()
@@ -27,6 +28,7 @@ const App: FC = () => {
             <Route path="/" element={<PageWrapper><GameTab /></PageWrapper>} />
             <Route path="/credits" element={<PageWrapper><CreditTab /></PageWrapper>} />
             <Route path="/boards" element={<PageWrapper><BoardTab /></PageWrapper>} />
+            <Route path="/boards/detail" element={<PageWrapper><GameDetailPage /></PageWrapper>} />
             <Route path="/ingame" element={<PageWrapper><InGamePage /></PageWrapper>} />
             <Route path="/ingame/options" element={<PageWrapper><GameOptionPage /></PageWrapper>} />
             <Route path="/ingame/roundNotice" element={<PageWrapper><GameRoundPage /></PageWrapper>} />

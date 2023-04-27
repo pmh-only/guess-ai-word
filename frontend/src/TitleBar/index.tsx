@@ -8,25 +8,28 @@ import { useNavigate } from 'react-router-dom'
 interface Props {
   title: string
   isFreepass?: boolean
+  isHome?: boolean
 }
 
-const TitleBar: FC<Props> = ({ title, isFreepass = false }) => {
+const TitleBar: FC<Props> = ({ title, isFreepass = false, isHome = false }) => {
   const [showCloseModal, setShowClassModal] = useState(false)
   const navigate = useNavigate()
 
   return (
     <>
       <nav className={style.titleBar}>
-        <motion.button
-          onClick={() => {
-            isFreepass
-              ? navigate('/')
-              : setShowClassModal(true)
-          }}
-          whileTap={{ backgroundColor: 'var(--main-secondary)' }}
-          className={style.backBtn}>
-          <MdArrowBack size={24} />
-        </motion.button>
+        {!isHome && (
+          <motion.button
+            onClick={() => {
+              isFreepass
+                ? navigate(-1)
+                : setShowClassModal(true)
+            }}
+            whileTap={{ backgroundColor: 'var(--main-secondary)' }}
+            className={style.backBtn}>
+            <MdArrowBack size={24} />
+          </motion.button>
+        )}
         <h2>{title}</h2>
       </nav>
       <AnimatePresence>
@@ -50,7 +53,7 @@ const TitleBar: FC<Props> = ({ title, isFreepass = false }) => {
                 </motion.button>
                 <motion.button
                   whileTap={{ backgroundColor: 'var(--main-secondary)' }}
-                  onClick={() => { setShowClassModal(false); navigate('/') }}>
+                  onClick={() => { setShowClassModal(false); navigate(-1) }}>
                     네
                 </motion.button>
               </div>
