@@ -7,11 +7,12 @@
     height: calc(100% - 80px);
     display: grid;
     align-content: start;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     list-style: none;
     padding: 10px;
     margin: 0;
     gap: 8px;
+
 
     > li {
       aspect-ratio: 1 / 1;
@@ -60,5 +61,17 @@
         gap: 5px;
       }
     }
+  }
+}
+
+@media (max-width: 600px) {
+  .itemList {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (max-width: 900px) and (min-width: 600px) {
+  .itemList {
+    grid-template-columns: 1fr 1fr 1fr !important;
   }
 }
