@@ -39,7 +39,7 @@ const BoardTab: FC = () => {
         </li>
         {games.get('SPEEDRUN')?.map((game, i) => (
           <li key={i}>
-            <p><i>{i + 1}등</i> {game.playerName ?? '익명'}</p>
+            <p><i>{i + 1}</i>등 {game.playerName ?? '익명'}</p>
             <p><i>{game.finalScore}</i>점</p>
             <button onClick={() => {
               navigate('/boards/detail', {
@@ -56,7 +56,7 @@ const BoardTab: FC = () => {
         </li>
         {games.get('NORMAL')?.map((game, i) => (
           <li key={i}>
-            <p><i>{i + 1}등</i> {game.playerName ?? '익명'}</p>
+            <p><i>{i + 1}</i>등 {game.playerName ?? '익명'}</p>
             <p><i>{game.finalScore}</i>점</p>
             <button onClick={() => {
               navigate('/boards/detail', {
