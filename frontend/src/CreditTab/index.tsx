@@ -12,7 +12,7 @@ const CreditTab: FC = () =>
       <li><img src="/credit/prompt.webp" /><div className={style.content}><h2>Prompt Eng.</h2><p>Minhyeok Park</p></div></li>
       <li><img src="/credit/openai.webp" className={style.openai} /><div className={style.content}><h2>Powered by</h2><p>ChatGPT API</p></div></li>
       <li><img src="/credit/designref.webp" /><div className={style.content}><h2>Design ref. by</h2><p>Google Material Design 3</p></div></li>
-      <li><div className={style.content}><h2>Copyright</h2><p>&copy; 2023. Minhyeok Park</p><a target='_blank' href="https://github.com/pmh-only/guess-ai-word/blob/main/LICENSE.md" rel="noreferrer">Read more</a></div></li>
+      <li><div className={style.content}><h2>Copyright</h2><p>&copy; 2023. Minhyeok Park</p><a target='_blank' href="https://github.com/pmh-only/guess-ai-word/blob/main/LICENSE" rel="noreferrer">Read more</a></div></li>
       <li><div className={style.content}><h2>Source Code</h2><p>pmh-only/guessaiword</p><a target='_blank' href="https://github.com/pmh-only/guess-ai-word" rel="noreferrer">Github</a></div></li>
     </ul>
   </>

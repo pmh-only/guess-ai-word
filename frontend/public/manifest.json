@@ -1,14 +1,14 @@
 {
   "background_color": "#f3ebeb",
-  "description": "GuessAIWord - GPT와 함께하는 단어맞추기 게임\n\nAI에게 질문하고 AI가 생각한 단어를 맞춰보세요!\n\n* 다양한 단어 카테고리 &amp; 게임 모드!\n* 3개의 질문 후보 중 하나를 선택해 AI에게 질문!\n* 가끔씩 AI가 이상한 정보를 줄지도...?\n\n2023년 경북SW고 Spring &amp; 웹앱 프로젝트 - 개발자: 박민혁",
+  "description": "GuessAIWord - AI와 함께하는 단어맞추기 게임\n\nAI에게 질문하고 AI가 생각한 단어를 맞춰보세요!\n\n* 다양한 단어 카테고리 &amp; 게임 모드!\n* 3개의 질문 후보 중 하나를 선택해 AI에게 질문!\n* 가끔씩 AI가 이상한 정보를 줄지도...?\n\n2023년 경북SW고 Spring &amp; 웹앱 프로젝트 - 개발자: 박민혁",
   "dir": "ltr",
   "display": "standalone",
-  "name": "GuessAIWord - GPT와 함께하는 단어맞추기 게임",
+  "name": "GuessAIWord - AI와 함께하는 단어맞추기 게임",
   "orientation": "portrait",
   "scope": "/",
   "short_name": "GuessAIWord",
   "start_url": "/",
-  "theme_color": "#ed8e8e",
+  "theme_color": "#f3ebeb",
   "categories": [
     "games"
   ],

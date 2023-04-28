@@ -1,5 +1,5 @@
 /* eslint-disable */
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js')
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.1.5/workbox-sw.js')
 
 const CACHE = 'guessaiword'
 
@@ -42,3 +42,8 @@ self.addEventListener('fetch', (event) => {
     })())
   }
 })
+
+
+workbox.routing.setDefaultHandler(
+  new workbox.strategies.NetworkOnly()
+);
