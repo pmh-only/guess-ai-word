@@ -40,12 +40,6 @@ const InGamePage: FC = () => {
   const qnaListRef = createRef<HTMLUListElement>()
 
   useEffect(() => {
-    setInterval(() => {
-      inputRef.current?.setSelectionRange(inputRef.current.value.length, inputRef.current.value.length)
-    }, 100)
-  }, [])
-
-  useEffect(() => {
     qnaListRef.current?.scrollTo(0, qnaListRef.current.scrollHeight)
   }, [qnaList])
 

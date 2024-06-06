@@ -97,8 +97,8 @@
     }
     
     .inputReal {
-      opacity: 0;
-      width: 0px;
+      position: absolute;
+      top: -999999px;
     }
   }
 
