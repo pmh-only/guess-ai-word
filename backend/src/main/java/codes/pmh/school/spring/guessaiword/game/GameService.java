@@ -347,6 +347,9 @@ public class GameService {
     }
 
     public int calculateRoundScore (GameRound round) {
+        if (!round.isCorrectAnswerShowed()) // 스킵시 0점
+            return 0;
+        
         if (!round.isCorrectAnswer()) // 오답시 0점
             return 0;
 
