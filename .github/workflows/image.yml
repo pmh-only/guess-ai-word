@@ -24,8 +24,8 @@ jobs:
           platforms: linux/arm64
           push: true
           tags: |
-            ghcr.io/pmh-only/guessaiword:${{ github.sha }}
-            ghcr.io/pmh-only/guessaiword:latest
+            ghcr.io/pmh-only/guess-ai-word:${{ github.sha }}
+            ghcr.io/pmh-only/guess-ai-word:latest
           labels: |
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
             org.opencontainers.image.revision=${{ github.sha }}
